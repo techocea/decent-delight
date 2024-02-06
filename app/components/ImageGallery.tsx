@@ -31,6 +31,7 @@ export default function ImageGallery({ images }: iAppProps) {
       </div>
         <div className="relative overflow-hidden rounded-lg bg-gray-100 lg:col-span-4">
           <Image src={urlFor(bigImage).url()} alt="bigImage" width={500} height={500} className="w-full h-full object-center object-cover  cursor-pointer"/>
+          <span className="absolute left-0 top-0 rounded-br-lg bg-red-500 px-3 py-1/5 text-sm uppercase tracking-wder text-white">sale</span>
         </div>
     </div>
   );
