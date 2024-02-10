@@ -49,7 +49,7 @@ export default async function ProductPge({
             </div>
 
             <div className="mb-6 flex items-center gap-3 md:mb-10">
-              <Button className="rounded-full gap-x-2">
+              <Button variant={"default"} className="rounded-full gap-x-2">
                 <span className="text-sm">4.2</span>
                 <Star className="h-5 w-5" />
               </Button>
@@ -80,26 +80,23 @@ export default async function ProductPge({
             </div>
 
             <div className="flex gap-2.5">
-              <AddToBag
+             <AddToBag
                 currency="USD"
                 description={data.description}
                 image={data.images[0]}
                 name={data.name}
                 price={data.price}
-                key={data._id}
                 price_id={data.price_id}
-              />
+              />            
               <CheckoutNow
                 currency="USD"
                 description={data.description}
                 image={data.images[0]}
                 name={data.name}
                 price={data.price}
-                key={data._id}
                 price_id={data.price_id}
               />
             </div>
-
             <p className="mt-12 text-base text-gray-500 tracking-wide">
               {data.description}
             </p>

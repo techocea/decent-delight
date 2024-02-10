@@ -15,4 +15,5 @@ export interface fullProduct {
     price:number;
     categoryName:string;
     images:any;
+    price_id:string
 }
