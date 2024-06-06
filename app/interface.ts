@@ -8,6 +8,8 @@ export interface simplifiedProduct {
 }
 
 
+
+
 export interface fullProduct {
     _id:string;
     name:string;
@@ -18,6 +20,8 @@ export interface fullProduct {
     images:any;
     price_id:string
 }
+
+
 
 export interface category{
     _id:string;
