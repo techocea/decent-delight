@@ -1,10 +1,12 @@
-import AddToBag from "@/app/components/AddToBag";
-import CheckoutNow from "@/app/components/CheckoutNow";
+//import AddToBag from "@/app/components/AddToBag";
+//import CheckoutNow from "@/app/components/CheckoutNow";
 import ImageGallery from "@/app/components/ImageGallery";
 import { fullProduct } from "@/app/interface";
 import { client } from "@/app/lib/sanity";
 import { Button } from "@/app/components/ui/button";
-import { Star, Truck } from "lucide-react";
+import { Truck } from "lucide-react";
+import WhatsAppChatButton from "@/app/components/WhatsappButton";
+
 
 async function getData(slug: string) {
   const query = `*[_type == "product" && slug.current == "${slug}"][0] {
@@ -33,11 +35,10 @@ export default async function ProductPge({
   const data: fullProduct = await getData(params.slug);
 
   return (
-    <div className="bg-white">
+    <section className="bg-white max-md:pb-8">
       <div className="mx-auto max-w-screen-xl px-4 md:px-8">
         <div className="grid gap-8 md:grid-cols-2">
-          <ImageGallery images={data.images} />
-
+          <ImageGallery images={data?.images} />
           <div className="md:py-8">
             <div className="mb-2 md:mb-3">
               <span className="mb-0.5 inline-block text-gray-500">
@@ -58,30 +59,41 @@ export default async function ProductPge({
               <Truck className="w-6 h-6" />
               <span className="text-sm">2-4 Days Delivery</span>
             </div>
-            <div className="flex gap-2.5">
-              <AddToBag
-                currency="USD"
-                description={data.description}
-                image={data.images[0]}
-                name={data.name}
-                price={data.price}
-                price_id={data.price_id}
-              />
-              <CheckoutNow
-                currency="USD"
-                description={data.description}
-                image={data.images[0]}
-                name={data.name}
-                price={data.price}
-                price_id={data.price_id}
-              />
-            </div>
             <p className="mt-10 text-base text-gray-500 tracking-wide">
               {data.description}
             </p>
+            <div className="flex flex-col gap-16 mt-10">
+              <div className="flex flex-col gap-2">
+                <h2 className="font-semibold text-gray-400">Size</h2>
+                <div className="flex gap-2">
+                  <Button variant="outline" className="rounded-full">S</Button>
+                  <Button variant="outline" className="rounded-full">M</Button>
+                  <Button variant="outline" className="rounded-full">L</Button>
+                </div>
+              </div>
+              <div className="flex gap-2.5">
+                <WhatsAppChatButton />
+                {/* <AddToBag
+                  currency="USD"
+                  description={data.description}
+                  image={data.images[0]}
+                  name={data.name}
+                  price={data.price}
+                  price_id={data.price_id}
+                />
+                <CheckoutNow
+                  currency="USD"
+                  description={data.description}
+                  image={data.images[0]}
+                  name={data.name}
+                  price={data.price}
+                  price_id={data.price_id}
+                /> */}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

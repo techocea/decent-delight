@@ -1,16 +1,16 @@
 import Image from "next/image";
-import { simplifiedProduct } from "../interface";
-import { client } from "../lib/sanity";
+import { category } from "../../interface";
+import { client } from "../../lib/sanity";
 import Link from "next/link";
+import { Button } from "@/app/components/ui/button";
 
 async function getData(category: string) {
-    const query = `*[_type == "product" && category->name =="${category}"]{
+    const query = `*[_type == "product" && category->slug.current =="${category}"]{
         _id,
         "imageUrl": images[0].asset->url,
         name,
-        price,
-        "categoryName": category->name
-        "slug": slug.current,   
+        "slug": slug.current,
+        "categoryName": category->name,         
       }`;
 
     const data = await client.fetch(query);
@@ -21,13 +21,13 @@ async function getData(category: string) {
 export const dynamic = "force-dynamic";
 
 export default async function CategoryPage({ params }: { params: { category: string } }) {
-    const data: simplifiedProduct[] = await getData(params.category)
+    const data: category[] = await getData(params.category)
 
     return (
         <div className="bg-white">
-            <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+            <div className="mx-auto max-w-2xl p-4 sm:px-6 lg:max-w-7xl lg:px-8">
                 <div className="flex justify-between items-center">
-                    <h1 className="text-2xl font-bold tracking-tight text-gray-900">Our Products for {params.category}</h1>
+                    {/* <h1 className="text-2xl font-bold tracking-tight text-gray-900">Our Products for {params.category}</h1> */}
                 </div>
                 <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                     {data.map((product) => (
@@ -39,13 +39,14 @@ export default async function CategoryPage({ params }: { params: { category: str
                                     alt="product Image" />
                             </div>
                             <div className="mt-4 flex justify-between">
-                                <div>
+                                <div className="flex justify-between w-full items-center">
                                     <h3 className="text-sm font-medium text-gray-700 ">
-                                        <Link href={`/product/${product.slug}`}>{product.name}</Link>
+                                        {product.name}
                                     </h3>
-                                    <p className="mt-1 text-sm text-gray-500">{product.categoryName}</p>
+                                    <Button asChild>
+                                        <Link href={`/product/${product.slug}`}>Buy Cake</Link></Button>
                                 </div>
-                                <p>${product.price}</p>
+
                             </div>
                         </div>
                     ))}
