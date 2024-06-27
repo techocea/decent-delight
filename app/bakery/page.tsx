@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { client } from "../lib/sanity";
+import { client } from "../../lib/sanity";
 import { category } from "../interface";
-import { Button } from "../components/ui/button";
+import { Button } from "../../components/ui/ui/button";
 async function getData() {
     const query = `*[_type == "category"]{
         _id,

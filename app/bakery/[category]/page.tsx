@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { category } from "../../interface";
-import { client } from "../../lib/sanity";
+import { client } from "../../../lib/sanity";
 import Link from "next/link";
-import { Button } from "@/app/components/ui/button";
+import { Button } from "@/components/ui/ui/button";
 
 async function getData(category: string) {
     const query = `*[_type == "product" && category->slug.current =="${category}"]{

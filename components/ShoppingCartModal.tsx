@@ -1,11 +1,11 @@
 "use client";
-import { Button } from "@/app/components/ui/button";
+import { Button } from "@/components/ui/ui/button";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
-} from "@/app/components/ui/sheet";
+} from "@/components/ui/ui/sheet";
 import Image from "next/image";
 import { useShoppingCart } from "use-shopping-cart";
 

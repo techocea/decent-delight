@@ -1,12 +1,13 @@
+"use client";
 //import AddToBag from "@/app/components/AddToBag";
 //import CheckoutNow from "@/app/components/CheckoutNow";
-import ImageGallery from "@/app/components/ImageGallery";
+import React, { useState } from "react";
+import ImageGallery from "@/components/ImageGallery";
 import { fullProduct } from "@/app/interface";
-import { client } from "@/app/lib/sanity";
-import { Button } from "@/app/components/ui/button";
+import { client } from "@/lib/sanity";
+import { Button } from "@/components/ui/button";
 import { Truck } from "lucide-react";
-import WhatsAppChatButton from "@/app/components/WhatsappButton";
-
+import WhatsAppChatButton from "@/components/WhatsappButton";
 
 async function getData(slug: string) {
   const query = `*[_type == "product" && slug.current == "${slug}"][0] {
@@ -18,7 +19,7 @@ async function getData(slug: string) {
           "slug": slug.current,
           "categoryName": category->name,
           price_id
-      }`;
+          }`;
 
   const data = await client.fetch(query);
 
@@ -32,8 +33,12 @@ export default async function ProductPge({
 }: {
   params: { slug: string };
 }) {
+  const [selectedSize, setSelectedSize] = useState<string>("");
   const data: fullProduct = await getData(params.slug);
 
+  const handleSizeToggle = (size: string) => {
+    setSelectedSize(size);
+  };
   return (
     <section className="bg-white max-md:pb-8">
       <div className="mx-auto max-w-screen-xl px-4 md:px-8">
@@ -66,13 +71,24 @@ export default async function ProductPge({
               <div className="flex flex-col gap-2">
                 <h2 className="font-semibold text-gray-400">Size</h2>
                 <div className="flex gap-2">
-                  <Button variant="outline" className="rounded-full">S</Button>
-                  <Button variant="outline" className="rounded-full">M</Button>
-                  <Button variant="outline" className="rounded-full">L</Button>
+                  {["S", "M", "L"].map((size) => (
+                    <Button
+                      key={size}
+                      variant="outline"
+                      className={`rounded-full ${selectedSize === size ? "bg-gray-800 text-white" : ""}`}
+                      onClick={() => handleSizeToggle(size)}
+                    >
+                      {size}
+                    </Button>
+                  ))}
                 </div>
               </div>
               <div className="flex gap-2.5">
-                <WhatsAppChatButton />
+                <WhatsAppChatButton
+                  productName={data.name}
+                  price={data.price}
+                  selectedSize={selectedSize}
+                />
                 {/* <AddToBag
                   currency="USD"
                   description={data.description}
