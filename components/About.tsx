@@ -2,14 +2,42 @@ import Image from "next/image";
 
 export default function About() {
     return (
-        <main className="bg-secondary-100 flex items-center justify-center py-10 lg:py-16 max-md:px-10">
-            <div className="flex max-md:flex-col items-center justify-center gap-6">
-                <Image src="/about-img.svg" width={386} height={487} alt="cake delivery website" className="max-md:w-[275px] max-md:h-auto" />
-                <div className="flex flex-col gap-2 sm:max-w-xl text-justify">
-                    <h1 className="font-bold text-2xl text-primary max-md:text-center max-md:mt-10">Meet Chanaka & Hansika</h1>
-                    <p className="text-primary text-sm">Meet Chanaka and Hansika, the culinary dream team behind a delectable array of artisanal treats. With a shared passion for baking, they infuse every creation with a blend of creativity and love. From intricately decorated cakes to melt-in-your-mouth pastries, their dedication to quality and flavor shines through in every bite. Join them on a journey of culinary delight that&apos;s sure to leave your taste buds wanting more. <br /><br />The dynamic duo behind the oven, are on a mission to spread joy, one baked good at a time. Their kitchen is a hub of innovation and experimentation, where traditional recipes meet modern twists. Whether it&apos;s a classic chocolate chip cookie or an exotic cake inspired by their travels, each creation tells a story of passion and dedication. Indulge in the magic of Chanaka and Hansika&apos;s baking wizardry and let your taste buds embark on a flavorful adventure.</p>
+        <main className="bg-white flex items-center justify-center py-16 lg:py-24 lg:px-24 2xl:px-48 2xl:py-32 max-md:px-10">
+            <div className="flex flex-col items-start justify-center lg:max-w-7xl 2xl:max-w-screen-2xl w-full gap-10">
+                <div className="lg:flex gap-10 lg:items-start lg:justify-between w-full">
+                    <Image
+                        src="/about-img.svg"
+                        width={386}
+                        height={487}
+                        alt="cake delivery website"
+                        className="max-md:w-[275px] max-md:h-auto"
+                    />
+                    <div className="text-justify flex lg:min-w-4xl flex-col gap-8 mt-16 lg:mt-0">
+                        <div>
+                            <h1 className="font-bold text-3xl lg:text-4xl text-primary max-md:text-center pb-4 ">
+                                Our Story
+                            </h1>
+                            <p className="text-primary text-lg">
+                                Founded with a passion for baking and an eye for detail, Decent
+                                Delight began as a dream to create not just desserts, but
+                                memorable experiences. Each creation is a testament to our
+                                commitment to quality, artistry, and the joy of celebration. From
+                                our signature pastries to our custom celebration cakes, we strive
+                                to bring a touch of elegance and luxury to every occasion.
+                            </p>
+                        </div>
+                        <div>
+                            <h1 className="font-bold text-3xl lg:text-4xl text-primary max-md:text-center pb-4 ">
+                                Join Our Journey
+                            </h1>
+                            <p className="text-primary text-lg">
+                                We invite you to join us on this delicious journey. Whether you are looking to celebrate a special occasion or simply indulge in a moment of sweetness, Decent Delight is here to make every moment memorable. Follow us on our social media channels to stay updated with our latest creations, special offers, and behind-the-scenes glimpses of our baking artistry.
+
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
-    )
+    );
 }
