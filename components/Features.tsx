@@ -1,3 +1,4 @@
+import React from "react";
 import { BoxIcon, CakeIcon, TruckIcon } from "lucide-react";
 
 export default function Features() {
