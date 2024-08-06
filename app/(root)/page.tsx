@@ -1,15 +1,17 @@
-import MostDelicious from '@/components/MostDelicious'
+import React from "react";
 
-import sampleData from '@/lib/constants'
-import React from 'react'
+import MostDelicious from "@/components/MostDelicious";
+import { getLatestProducts } from "@/lib/actions/product.actions";
 
-const Home = () => {
+
+const Home = async () => {
+  const latestProducts = await getLatestProducts();
   return (
-    <div className='space-y-8 h-screen p-10' >
-      <h2 className='text-primary font-bold text-2xl'>Most Delicious</h2>
-      <MostDelicious data={sampleData.products} />
+    <div className="space-y-8 h-screen p-10">
+      
+      <MostDelicious title="Latest Products" data={latestProducts} />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
