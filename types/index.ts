@@ -1,5 +1,5 @@
 
-import { InferSelectModel } from 'drizzle-orm'
+// import { InferSelectModel } from 'drizzle-orm'
 
-// PRODUCTS
-export type Product = InferSelectModel<typeof products>
+// // PRODUCTS
+// export type Product = InferSelectModel<typeof products>
