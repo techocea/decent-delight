@@ -1,11 +1,5 @@
 import Image from "next/image";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "../ui/carousel";
+
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { Skeleton } from "../ui/skeleton";
@@ -23,24 +17,20 @@ interface iAppProps {
 export default function ProductCard({ item }: iAppProps) {
   return (
     <div className="rounded-lg">
-      <Carousel className="w-full mx-auto">
-        <CarouselContent>
-          {item.images.map((item, index) => (
-            <CarouselItem key={index}>
-              <div className="relative h-[330px] w-full">
-                <Image
-                  src={item}
-                  className="object-cover object-center w-full h-full rounded-lg"
-                  fill
-                  alt="Product Image"
-                />
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious className="ml-16 text-black bg-white" />
-        <CarouselNext className="mr-16 text-black bg-white" />
-      </Carousel>
+      <div>
+        {item.images.map((item, index) => (
+          <div key={index}>
+            <div className="relative h-[330px] w-full">
+              <Image
+                src={item}
+                className="object-cover object-center w-full h-full rounded-lg"
+                fill
+                alt="Product Image"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
 
       <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mt-2">
         <h1 className="font-semibold text-xl">{item.name}</h1>

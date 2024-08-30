@@ -1,6 +1,6 @@
 import React from 'react'
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+// import { Button } from "@/components/ui/button";
+// import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 
 const Hero = () => {
