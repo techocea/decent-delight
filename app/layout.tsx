@@ -12,8 +12,8 @@ import { ourFileRouter } from "./api/uploadthing/core";
 const lora = Lora({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: process.env.APP_NAME,
-  description: process.env.APP_DESCRIPTION,
+  title: "Decent Delight",
+  description: "Decadence Redefined",
   icons: {
     icon: "/favicon.svg",
   },
