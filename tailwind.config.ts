@@ -1,13 +1,14 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
+import { withUt } from "uploadthing/tw";
 
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -26,12 +27,12 @@ const config = {
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "#6E493A",
-          100:"#897464",
+          100: "#897464",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
           DEFAULT: "#897464",
-          100:"#FAE8CD",
+          100: "#FAE8CD",
           foreground: "hsl(var(--secondary-foreground))",
         },
         destructive: {
@@ -76,7 +77,13 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config
+  corePlugins: {
+    aspectRatio: false,
+  },
+  plugins: [
+    require("@tailwindcss/aspect-ratio"),
+    require("tailwindcss-animate"),
+  ],
+} satisfies Config;
 
-export default config
+export default withUt(config);
