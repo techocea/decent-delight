@@ -4,7 +4,7 @@ import FeaturedProducts from "@/components/storefront/FeaturedProducts";
 import ImageGallery from "@/components/storefront/ImageGallery";
 
 import { ShoppingBagButton } from "@/components/ui/submit-button";
-import { ShoppingBagIcon, StarIcon } from "lucide-react";
+import { StarIcon } from "lucide-react";
 import { notFound } from "next/navigation";
 
 async function getData(productId: string) {

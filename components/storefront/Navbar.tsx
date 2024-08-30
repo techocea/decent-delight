@@ -2,8 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import { MenuIcon, ShoppingBagIcon, User2Icon, X } from "lucide-react";
-
+import { ShoppingBagIcon, User2Icon } from "lucide-react";
 import { navLinks } from "@/lib/constants";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { UserDropdown } from "./UserDropdown";
@@ -12,17 +11,17 @@ import inter from "@/lib/fonts";
 import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { redis } from "@/app/lib/redis";
 import { Cart } from "@/lib/interface";
+import MobileNav from "./MobileNav";
 
 const Navbar = async () => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
   const cart: Cart | null = await redis.get(`cart-${user?.id}`);
-
   const total = cart?.items.reduce((sum, item) => sum + item.quantity, 0) || 0;
 
   return (
-    <header className="bg-accent lg:max-w-7xl 2xl:max-w-screen-2xl flex items-center h-16  justify-between w-full px-4 lg:py-6 lg:px-8">
+    <header className="bg-accent lg:max-w-7xl 2xl:max-w-screen-2xl flex items-center h-16 justify-between w-full px-4 lg:py-6 lg:px-8">
       <Link href="/">
         <Image
           src="/logo.png"
@@ -32,6 +31,8 @@ const Navbar = async () => {
           alt="Decent Delight"
         />
       </Link>
+
+      {/* Desktop Navigation */}
       <nav className="hidden lg:flex gap-6">
         {navLinks.map((item) => (
           <Link href={item.url} key={item.label}>
@@ -39,6 +40,7 @@ const Navbar = async () => {
           </Link>
         ))}
       </nav>
+
       <div className="flex items-center gap-2 justify-between">
         {user ? (
           <UserDropdown
@@ -53,6 +55,7 @@ const Navbar = async () => {
             <User2Icon />
           </LoginLink>
         )}
+
         <Link href="/bag">
           <div className="relative">
             <ShoppingBagIcon className="text-primary cursor-pointer" />
@@ -63,14 +66,7 @@ const Navbar = async () => {
             </div>
           </div>
         </Link>
-
-        {/* Mobile View */}
-        {/* <div
-            className="lg:hidden w-10 h-10 flex text-primary items-center justify-center cursor-pointer ease-in duration-500"
-            onClick={handleMobileNav}
-          >
-            {!showNav ? <MenuIcon size={32} /> : <X size={32} />}
-          </div> */}
+        <MobileNav />
       </div>
     </header>
   );

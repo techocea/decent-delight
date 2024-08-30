@@ -31,7 +31,7 @@ import { ChevronLeft, XIcon } from "lucide-react";
 import { UploadDropzone } from "@/app/lib/uploadthing";
 import { SubmitButton } from "../ui/submit-button";
 import { categories } from "@/lib/constants";
-import { createProduct, editProduct } from "@/app/actions";
+import {  editProduct } from "@/app/actions";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { productSchema } from "@/app/lib/zodSchemas";

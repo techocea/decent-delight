@@ -10,7 +10,7 @@ const Hero = () => {
         <div className="flex flex-col gap-10">
           <h1 className="font-bold lg:text-7xl text-4xl lg:text-left text-center text-primary lg:max-w-2xl lg:leading-[101px]">Decent Delight Online Bakery</h1>
           <div className='hidden md:block'>
-            <Button size="lg" className="flex items-center gap-2">Order Now <ArrowRight /></Button>
+            {/* <Button size="lg" className="flex items-center gap-2">Order Now <ArrowRight /></Button> */}
           </div>
         </div>
         {/* Desktop view */}
@@ -24,7 +24,7 @@ const Hero = () => {
         </div>
 
         <div className='md:hidden mt-10 flex items-center justify-center'>
-          <Button size="lg" className="flex items-center gap-2">Order Now <ArrowRight /></Button>
+          {/* <Button size="lg" className="flex items-center gap-2">Order Now <ArrowRight /></Button> */}
         </div>
       </div>
     </main>

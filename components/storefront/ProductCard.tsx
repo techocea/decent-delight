@@ -27,7 +27,7 @@ export default function ProductCard({ item }: iAppProps) {
         <CarouselContent>
           {item.images.map((item, index) => (
             <CarouselItem key={index}>
-              <div className="relative h-[330px]">
+              <div className="relative h-[330px] w-full">
                 <Image
                   src={item}
                   className="object-cover object-center w-full h-full rounded-lg"
@@ -42,15 +42,15 @@ export default function ProductCard({ item }: iAppProps) {
         <CarouselNext className="mr-16 text-black bg-white" />
       </Carousel>
 
-      <div className="flex justify-between items-center mt-2">
+      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mt-2">
         <h1 className="font-semibold text-xl">{item.name}</h1>
-        <h3 className="inline-flex items-center rounded-md bg-primary-100 px-2 py-1 text-xs font-medium text-accent">
+        <h3 className="inline-flex items-center rounded-md py-1 text-sm font-medium text-primary">
           Rs {item.price}
         </h3>
       </div>
-      <p className="text-gray-400 line-clamp-2">{item.description}</p>
+      {/* <p className="text-gray-400 line-clamp-2">{item.description}</p> */}
       <Button className="w-full mt-2" asChild>
-        <Link href={`/product/${item.id}`}>Read More</Link>
+        <Link href={`/product/${item.id}`}>Buy Now</Link>
       </Button>
     </div>
   );

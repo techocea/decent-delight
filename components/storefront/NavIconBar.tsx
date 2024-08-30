@@ -6,7 +6,7 @@ import Link from "next/link";
 import { SearchIcon, ShoppingBagIcon, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import CartModal from "./CartModal";
+import CartModal from "./MobileNav";
 import inter from "@/lib/fonts";
 
 const NavIconBar = () => {

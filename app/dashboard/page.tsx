@@ -1,8 +1,8 @@
 import DashboardStats from "@/components/dashboard/DashboardStats";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+// import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   Card,
-  CardContent,
+  // CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
