@@ -18,9 +18,9 @@ const Footer = () => {
             className="max-md:w-[50%] object-contain "
             alt="Decent Delight"
           />
-          <h3>No 243 Mahahunupitiya, Katuwapitya Road,Negombo</h3>
-          <h3>decentdelight@gmail.com</h3>
-          <p>+94777711335</p>
+          <h3>Negombo,Sri Lanka</h3>
+          <h3>decentdelight2022@gmail.com</h3>
+          <p>+94769201150</p>
           <div className="flex flex-col gap-2">
             <p>Follow us on</p>
             <div className="flex gap-3">
