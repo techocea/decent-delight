@@ -2,11 +2,10 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import { ShoppingBagIcon, User2Icon } from "lucide-react";
+import {  User2Icon } from "lucide-react";
 import { navLinks } from "@/lib/constants";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { UserDropdown } from "./UserDropdown";
-import inter from "@/lib/fonts";
 
 import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
 // import { redis } from "@/app/lib/redis";
