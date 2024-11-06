@@ -9,16 +9,16 @@ import { UserDropdown } from "./UserDropdown";
 import inter from "@/lib/fonts";
 
 import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
-import { redis } from "@/app/lib/redis";
-import { Cart } from "@/lib/interface";
+// import { redis } from "@/app/lib/redis";
+// import { Cart } from "@/lib/interface";
 import MobileNav from "./MobileNav";
 
 const Navbar = async () => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  const cart: Cart | null = await redis.get(`cart-${user?.id}`);
-  const total = cart?.items.reduce((sum, item) => sum + item.quantity, 0) || 0;
+  // const cart: Cart | null = await redis.get(`cart-${user?.id}`);
+  // const total = cart?.items.reduce((sum, item) => sum + item.quantity, 0) || 0;
 
   return (
     <header className="bg-accent lg:max-w-7xl 2xl:max-w-screen-2xl flex items-center h-16 justify-between w-full px-4 lg:py-6 lg:px-8">
@@ -56,7 +56,7 @@ const Navbar = async () => {
           </LoginLink>
         )}
 
-        <Link href="/bag">
+        {/* <Link href="/bag">
           <div className="relative">
             <ShoppingBagIcon className="text-primary cursor-pointer" />
             <div
@@ -65,7 +65,7 @@ const Navbar = async () => {
               {total}
             </div>
           </div>
-        </Link>
+        </Link> */}
         <MobileNav />
       </div>
     </header>
