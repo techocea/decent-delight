@@ -1,16 +1,17 @@
-import {  deleteItem } from "@/app/actions";
+import { deleteItem } from "@/app/actions";
 import { redis } from "@/app/lib/redis";
 import { Button } from "@/components/ui/button";
 import { DeleteItem } from "@/components/ui/submit-button";
 import { Cart } from "@/lib/interface";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { ShoppingBagIcon } from "lucide-react";
-
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { unstable_noStore as noStore } from "next/cache";
 
 export default async function BagRoute() {
+  noStore();
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 

@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { SubmitButton } from "@/components/ui/submit-button";
 import Link from "next/link";
+
 export default function DeleteProduct({ params }: { params: { id: string } }) {
   return (
     <div className="h-[80vh] w-full flex items-center justify-center">

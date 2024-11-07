@@ -1,7 +1,7 @@
 import React from "react";
 import prisma from "@/app/lib/db";
-
 import ProductCard from "../storefront/ProductCard";
+import { unstable_noStore as noStore } from "next/cache";
 
 async function getData() {
   const data = await prisma.product.findMany({
@@ -15,6 +15,7 @@ async function getData() {
 }
 
 export default async function MostDelicious() {
+  noStore();
   const data = await getData();
 
   return (
