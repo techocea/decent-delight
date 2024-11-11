@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import {  User2Icon } from "lucide-react";
+import { User2Icon } from "lucide-react";
 import { navLinks } from "@/lib/constants";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { UserDropdown } from "./UserDropdown";
@@ -46,7 +46,8 @@ const Navbar = async () => {
             email={user.email as string}
             name={user.given_name as string}
             userImage={
-              user.picture ?? `https://avatar.vercel.sh/${user.given_name}`
+              user.picture ??
+              `https://avatar.vercel.sh/${user.given_name}?${Date.now()}`
             }
           />
         ) : (

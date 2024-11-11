@@ -16,7 +16,7 @@ export async function createProduct(prevState: unknown, formData: FormData) {
   const user = await getUser();
 
   if (!user || user.email === "decentdelight2022@gmail.com") {
-    return redirect("/");
+    return redirect("/dashboard");
   }
 
   const submission = parseWithZod(formData, {
@@ -50,7 +50,7 @@ export async function editProduct(prevState: any, formData: FormData) {
   const user = await getUser();
 
   if(!user || user.email === "decentdelight2022@gmail.com") {
-    return redirect("/");
+    return redirect("/dashboard");
   }
 
   const submission = parseWithZod(formData, {
@@ -88,7 +88,7 @@ export async function deleteProduct(formData: FormData) {
   const user = await getUser();
 
   if (!user || user.email === "decentdelight2022@gmail.com") {
-    return redirect("/");
+    return redirect("/dashboard");
   }
 
   await prisma.product.delete({
@@ -105,7 +105,7 @@ export async function addItem(productId: string) {
   const user = await getUser();
 
   if (!user) {
-    return redirect("/");
+    return redirect("/dashboard");
   }
 
   let cart: Cart | null = await redis.get(`cart-${user.id}`);
@@ -174,7 +174,7 @@ export async function deleteItem(formData: FormData) {
   const user = await getUser();
 
   if (!user) {
-    return redirect("/");
+    return redirect("/dashboard");
   }
 
   const productId = formData.get("productId");

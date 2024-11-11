@@ -7,8 +7,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { redirect } from "next/navigation";
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const { getUser } = await getKindeServerSession();
+
+  const user = await getUser();
+  const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
+  const DEVELOPER_EMAIL = process.env.DEVELOPER_EMAIL;
+
+  if (!user || user.email != ADMIN_EMAIL && user.email != DEVELOPER_EMAIL) {
+    return redirect("/");
+  }
   return (
     <>
       <DashboardStats />

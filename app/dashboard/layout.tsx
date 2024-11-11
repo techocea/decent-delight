@@ -36,9 +36,13 @@ export default async function DashboardLayout({
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  if (!user || user.email === "decentdelight2022@gmail.com") {
+  if (!user) {
     return redirect("/");
   }
+  if (user.email === "decentdelight2022@gmail.com") {
+    return redirect("/dashboard");
+  }
+  
   return (
     <div
       className={cn(
