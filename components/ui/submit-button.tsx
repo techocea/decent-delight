@@ -5,7 +5,8 @@ import React from "react";
 
 import { useFormStatus } from "react-dom";
 import { Button } from "./button";
-import { Loader2, ShoppingBagIcon } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 
 interface buttonProps {
   text: string;
@@ -56,7 +57,7 @@ export function ShoppingBagButton() {
       ) : (
         <div>
           <Button className="w-full mt-5">
-            <ShoppingBagIcon className="mr-4" /> Add to Cart
+            <FaWhatsapp size={28} className="mr-4" /> Place an Order
           </Button>
         </div>
       )}

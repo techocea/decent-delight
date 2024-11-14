@@ -1,12 +1,10 @@
-import { addItem } from "@/app/actions";
 import prisma from "@/app/lib/db";
 import FeaturedProducts from "@/components/storefront/FeaturedProducts";
 import ImageGallery from "@/components/storefront/ImageGallery";
-
-import { ShoppingBagButton } from "@/components/ui/submit-button";
 import { StarIcon } from "lucide-react";
 import { notFound } from "next/navigation";
 import { unstable_noStore as noStore } from "next/cache";
+import PlaceOrderButton from "@/components/storefront/PlaceOrderButton";
 
 async function getData(productId: string) {
   const data = await prisma.product.findUnique({
@@ -36,7 +34,6 @@ export default async function SingleProductPage({
 }) {
   noStore();
   const data = await getData(params.id);
-  const addProductToCart = addItem.bind(null, data.id);
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start lg:gap-24 py-16 px-4">
@@ -55,9 +52,12 @@ export default async function SingleProductPage({
           </div>
           <p className="mt-6 text-base text-gray">{data.description}</p>
 
-          <form action={addProductToCart}>
-            <ShoppingBagButton />
-          </form>
+          <div className="mt-4">
+            <PlaceOrderButton
+              productName={data.name}
+              productPrice={data.price}
+            />
+          </div>
         </div>
       </div>
 

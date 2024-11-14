@@ -35,6 +35,10 @@ const config = {
           100: "#FAE8CD",
           foreground: "hsl(var(--secondary-foreground))",
         },
+        whatsapp: {
+          DEFAULT: "#075E54",
+          foreground: "#25D366",
+        },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",

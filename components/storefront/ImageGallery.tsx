@@ -40,10 +40,10 @@ export default function ImageGallery({ images }: iAppProps) {
         />
 
         <div className="absolute inset-0 flex items-center justify-between px-4">
-          <Button onClick={handlePrevClick} variant="secondary" size="icon">
+          <Button onClick={handlePrevClick} variant="ghost" size="icon">
             <ChevronLeft className="w-6 h-6" />
           </Button>
-          <Button onClick={handleNextClick} variant="secondary" size="icon">
+          <Button onClick={handleNextClick} variant="ghost" size="icon">
             <ChevronRight className="w-6 h-6" />
           </Button>
         </div>

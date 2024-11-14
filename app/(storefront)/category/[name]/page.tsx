@@ -175,7 +175,7 @@ export default async function ProductsByCategory({
     <section className="px-4 pb-16 md:px-6 lg:py-10">
       <div className="flex flex-col gap-4">
         <h1 className="font-bold text-2xl py-5">{title}</h1>
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 sm:gap-4 gap-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-4 gap-8">
           {data.map((item) => (
             <ProductCard item={item} key={item.id} />
           ))}

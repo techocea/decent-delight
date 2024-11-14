@@ -41,7 +41,7 @@ const Footer = () => {
         </div>
         <div className="flex flex-col gap-4">
           <h3 className="font-bold">SHOP</h3>
-          {navLinks.slice(1, 4).map((item) => (
+          {navLinks.map((item) => (
             <Link href={item.url} key={item.label}>
               {item.label}
             </Link>

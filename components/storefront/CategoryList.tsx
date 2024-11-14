@@ -14,15 +14,20 @@ const CategoryList = () => {
             <Image
               src="/cookies.jpg"
               fill
-              sizes="20vw"
-              className="object-cover object-center"
+              quality={100}
+              className="w-full h-full object-cover object-center"
               alt="Category Image"
             />
             <div className="bg-gradient-to-b from-transparent to-primary-100 opacity-55" />
             <div className="p-6 flex items-end">
               <div>
                 <h3 className="font-bold text-2xl text-white">Sweets</h3>
-                <Link href="/category/cookies" className="text-sm font-medium text-white">Show Now</Link>
+                <Link
+                  href="/category/cookies"
+                  className="text-sm font-medium text-white"
+                >
+                  Show Now
+                </Link>
               </div>
             </div>
           </div>
@@ -31,15 +36,20 @@ const CategoryList = () => {
             <Image
               src="/minicake.jpg"
               fill
-              sizes="20vw"
-              className="object-cover object-center"
+              quality={100}
+              className="w-full h-full object-cover object-center"
               alt="Category Image"
             />
             <div className="bg-gradient-to-b from-transparent to-primary-100 opacity-55 sm:absolute sm:inset-0" />
             <div className="p-6 flex items-end sm:absolute sm:inset-0">
               <div>
                 <h3 className="font-bold text-2xl text-white">Cakes</h3>
-                <Link href="/category/predesigned_mini_cakes" className="text-sm font-medium text-white">Show Now</Link>
+                <Link
+                  href="/category/predesigned_mini_cakes"
+                  className="text-sm font-medium text-white"
+                >
+                  Show Now
+                </Link>
               </div>
             </div>
           </div>
@@ -48,15 +58,22 @@ const CategoryList = () => {
             <Image
               src="/main.jpg"
               fill
-              sizes="20vw"
-              className="object-cover object-center"
+              quality={100}
+              className="w-full h-full object-cover object-center"
               alt="Category Image"
             />
             <div className="bg-gradient-to-b from-transparent to-primary-100 opacity-55 sm:absolute sm:inset-0" />
             <div className="p-6 flex items-end sm:absolute sm:inset-0">
               <div>
-                <h3 className="font-bold text-2xl text-white">Custom designs</h3>
-                <Link href="/category/sweet_table" className="text-sm font-medium text-white">Show Now</Link>
+                <h3 className="font-bold text-2xl text-white">
+                  Custom designs
+                </h3>
+                <Link
+                  href="/category/sweet_table"
+                  className="text-sm font-medium text-white"
+                >
+                  Show Now
+                </Link>
               </div>
             </div>
           </div>

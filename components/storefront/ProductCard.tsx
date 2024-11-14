@@ -39,7 +39,7 @@ export default function ProductCard({ item }: iAppProps) {
           Rs {item.price}
         </h3>
       </div>
-      {/* <p className="text-gray-400 line-clamp-2">{item.description}</p> */}
+      <p className="text-sm text-gray-400 line-clamp-2">{item.description}</p>
       <Button className="w-full mt-2" asChild>
         <Link href={`/product/${item.id}`}>Buy Now</Link>
       </Button>
