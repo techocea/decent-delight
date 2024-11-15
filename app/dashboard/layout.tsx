@@ -39,10 +39,10 @@ export default async function DashboardLayout({
   if (!user) {
     return redirect("/");
   }
-  if (user.email === "decentdelight2022@gmail.com") {
-    return redirect("/dashboard");
-  }
-  
+  // if (user.email === "decentdelight2022@gmail.com") {
+  //   return redirect("/dashboard");
+  // }
+   
   return (
     <div
       className={cn(
