@@ -8,6 +8,7 @@ import { Lora } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
+import Script from "next/script";
 
 const lora = Lora({ subsets: ["latin"] });
 
@@ -26,12 +27,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={cn(
-          "min-h-screen  antialiased",
-          lora.className
-        )}
-      >
+      <head>
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-7909GX1DC6"
+        ></Script>
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7909GX1DC6');`}
+        </Script>
+      </head>
+      <body className={cn("min-h-screen  antialiased", lora.className)}>
         <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
         {children}
       </body>
