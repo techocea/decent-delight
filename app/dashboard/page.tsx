@@ -1,25 +1,14 @@
 import DashboardStats from "@/components/dashboard/DashboardStats";
-// import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   Card,
-  // CardContent,
+  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
-  const { getUser } = await getKindeServerSession();
-
-  const user = await getUser();
-  // const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
-  const DEVELOPER_EMAIL = process.env.DEVELOPER_EMAIL;
-
-  if (!user || (user.email && user.email != DEVELOPER_EMAIL)) {
-    return redirect("/");
-  }
   return (
     <>
       <DashboardStats />
@@ -35,7 +24,7 @@ export default async function Dashboard() {
           <CardHeader>
             <CardTitle>Recent Sales</CardTitle>
           </CardHeader>
-          {/* <CardContent className="flex flex-col gap-4">
+          <CardContent className="flex flex-col gap-4">
             <div className="flex items-center gap-4">
               <Avatar className="hidden sm:flex w-10 h-10">
                 <AvatarFallback>DD</AvatarFallback>
@@ -76,7 +65,7 @@ export default async function Dashboard() {
               </div>
               <p className="ml-auto font-medium">+LKR 2000.00</p>
             </div>
-          </CardContent> */}
+          </CardContent>
         </Card>
       </div>
     </>

@@ -1,4 +1,4 @@
-import { navLinks } from "@/lib/constants";
+import { NAV_ITEMS } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -41,11 +41,11 @@ const Footer = () => {
         </div>
         <div className="flex flex-col gap-4">
           <h3 className="font-bold">SHOP</h3>
-          {navLinks.map((item) => (
-            <Link href={item.url} key={item.label}>
+          {/* {NAV_ITEMS.map((item) => (
+            <Link href={item.href} key={item.label}>
               {item.label}
             </Link>
-          ))}
+          ))} */}
         </div>
         <div className="flex flex-col">
           <h3 className="font-semibold pb-2">Subscribe to our newsletter</h3>

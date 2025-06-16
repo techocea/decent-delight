@@ -1,30 +1,42 @@
-export const navLinks = [
+export const NAV_ITEMS = [
   {
     id: 1,
-    url: "/about",
+    href: "/about",
     label: "About us",
   },
-  { id: 2, url: "/category/gateaux", label: "Gateaux" },
-  { id: 3, url: "/category/cake_jars", label: "Cake Jars" },
-  { id: 4, url: "/category/cookies", label: "Cookies" },
-  { id: 5, url: "/category/brownies", label: "Brownies" },
-  { id: 6, url: "/category/cupcakes", label: "Cupcakes" },
-  { id: 7, url: "/category/predesigned_mini_cakes", label: "Mini Cakes" },
-  { id: 8, url: "/category/predesigned_cakes", label: "Cakes" },
-  { id: 9, url: "/category/sweet_table", label: "Sweet Table" },
+  {
+    id: 2,
+    label: "Cakes",
+    children: [
+      { href: "/category/gateaux", label: "Gateaux" },
+      { href: "/category/predesigned_mini_cakes", label: "Mini Cakes" },
+      { href: "/category/predesigned_cakes", label: "Cakes" },
+    ],
+  },
+  {
+    id: 3,
+    label: "Sweets",
+    children: [
+      { href: "/category/cake_jars", label: "Cake Jars" },
+      { href: "/category/cookies", label: "Cookies" },
+      { href: "/category/brownies", label: "Brownies" },
+      { href: "/category/cupcakes", label: "Cupcakes" },
+      { href: "/category/sweet_table", label: "Sweet Table" },
+    ],
+  },
 ];
 
-export const dashboardNavLinks = [
+export const DASHBOARD_NAV_ITEMS = [
   {
-    url: "/dashboard",
+    href: "/dashboard",
     label: "Dashboard",
   },
   {
-    url: "/dashboard/orders",
+    href: "/dashboard/orders",
     label: "Orders",
   },
   {
-    url: "/dashboard/products",
+    href: "/dashboard/products",
     label: "Products",
   },
 ];
@@ -71,48 +83,3 @@ export const categories = [
     name: "sweet_table",
   },
 ];
-
-export const sampleData = {
-  products: [
-    {
-      name: "MAIN",
-      slug: "main",
-      category: "Gateuax",
-      images: ["/main.jpg", "/cupcakes.jpg"],
-      price: "59.99",
-
-      description:
-        "Lacoste sporting elegance with an urban twist. Fall in love with this loose, cozy sweatshirt in super-comfortable double-face piqué.",
-    },
-    {
-      name: "CUPCAKE",
-      slug: "cupcake",
-      category: "Mini Cakes",
-      images: ["/cupcakes.jpg"],
-      price: "59.99",
-
-      description:
-        "Lacoste sporting elegance with an urban twist. Fall in love with this loose, cozy sweatshirt in super-comfortable double-face piqué.",
-    },
-    {
-      name: "CAKE JAR",
-      slug: "cake-jar",
-      category: "Cake Jars",
-      images: ["/cake_jar.jpg", "/cupcakes.jpg"],
-      price: "59.99",
-
-      description:
-        "Lacoste sporting elegance with an urban twist. Fall in love with this loose, cozy sweatshirt in super-comfortable double-face piqué.",
-    },
-    {
-      name: "COOOKIES",
-      slug: "cookies",
-      category: "Cookies",
-      images: ["/cookies.jpg", "/cupcakes.jpg"],
-      price: "59.99",
-
-      description:
-        "Lacoste sporting elegance with an urban twist. Fall in love with this loose, cozy sweatshirt in super-comfortable double-face piqué.",
-    },
-  ],
-};

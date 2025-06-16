@@ -1,10 +1,7 @@
 import { ReactNode } from "react";
 import { Poppins } from "next/font/google";
-
 import { cn } from "@/lib/utils";
-
 import DashboardNavbar from "@/components/dashboard/Navbar";
-
 import { CircleUser, MenuIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,11 +13,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { redirect } from "next/navigation";
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { unstable_noStore as noStore } from "next/cache";
+import { SignOutButton } from "@clerk/nextjs";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -33,16 +27,7 @@ export default async function DashboardLayout({
   children: ReactNode;
 }) {
   noStore();
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
 
-  if (!user) {
-    return redirect("/");
-  }
-  // if (user.email === "decentdelight2022@gmail.com") {
-  //   return redirect("/dashboard");
-  // }
-   
   return (
     <div
       className={cn(
@@ -84,7 +69,7 @@ export default async function DashboardLayout({
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <LogoutLink>Logout</LogoutLink>
+              <SignOutButton>Log out</SignOutButton>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

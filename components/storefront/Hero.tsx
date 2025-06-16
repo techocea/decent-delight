@@ -5,27 +5,37 @@ import Image from "next/image";
 
 const Hero = () => {
   return (
-    <main className="bg-accent lg:max-w-7xl 2xl:max-w-screen-2xl w-full lg:mt-[-80px] lg:px-16 py-10 lg:py-16 px-4">
-      <div className=" md:flex items-center justify-center">
-        <div className="flex flex-col gap-10">
-          <h1 className="font-bold lg:text-7xl text-4xl lg:text-left text-center text-primary lg:max-w-2xl lg:leading-[101px]">Decent Delight Online Bakery</h1>
-          <div className='hidden md:block'>
-            {/* <Button size="lg" className="flex items-center gap-2">Order Now <ArrowRight /></Button> */}
-          </div>
-        </div>
-        {/* Desktop view */}
-        <div className='hidden md:block'>
-          <Image src="/main.jpg" width={400} height={400} className=" object-cover rounded-lg lg:aspect-square" alt="main" />
-        </div>
+    <main className="relative w-full h-[calc(100vh-80px)] overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0">
+      <Image 
+        src="/main-cake.jpg" 
+        fill
+        priority
+        className="object-cover w-full h-full"
+        alt="main" 
+      />
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/50" />
+      </div>
 
-        {/* Mobile view */}
-        <div className='md:hidden relative max-md:w-full h-80 mt-16'>
-          <Image src="/main.jpg" fill sizes="40vw" className="absolute  object-cover rounded-lg lg:aspect-square" alt="main" />
+      {/* Content */}
+      <div className="relative h-full flex items-center justify-center px-4 lg:px-16">
+      <div className="text-center max-w-4xl">
+        <h1 className="font-bold text-4xl md:text-6xl lg:text-7xl text-white leading-tight">
+        Decent Delight Online Bakery
+        </h1>
+        {/* Uncomment when ready to use button
+        <div className="mt-8">
+        <Button 
+          size="lg" 
+          className="bg-white text-primary hover:bg-white/90 flex items-center gap-2"
+        >
+          Order Now <ArrowRight />
+        </Button>
         </div>
-
-        <div className='md:hidden mt-10 flex items-center justify-center'>
-          {/* <Button size="lg" className="flex items-center gap-2">Order Now <ArrowRight /></Button> */}
-        </div>
+        */}
+      </div>
       </div>
     </main>
   )

@@ -1,6 +1,5 @@
 "use server";
 
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import { parseWithZod } from "@conform-to/zod";
 import { productSchema } from "./lib/zodSchemas";
@@ -8,14 +7,17 @@ import prisma from "./lib/db";
 import { redis } from "./lib/redis";
 import { Cart } from "@/lib/interface";
 import { revalidatePath } from "next/cache";
+import { currentUser } from "@clerk/nextjs/server";
 // import { stripe } from "@/lib/stripe";
 // import Stripe from "stripe";
 
 export async function createProduct(prevState: unknown, formData: FormData) {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const user = await currentUser();
 
-  if (!user || user.email === "decentdelight2022@gmail.com") {
+  if (
+    user?.emailAddresses?.[0]?.emailAddress === "decentdelight2022@gmail.com" ||
+    "dunsfordbright@gmail.com"
+  ) {
     return redirect("/dashboard");
   }
 
@@ -46,10 +48,12 @@ export async function createProduct(prevState: unknown, formData: FormData) {
 }
 
 export async function editProduct(prevState: any, formData: FormData) {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const user = await currentUser();
 
-  if(!user || user.email === "decentdelight2022@gmail.com") {
+  if (
+    !user ||
+    user?.emailAddresses?.[0]?.emailAddress === "decentdelight2022@gmail.com"
+  ) {
     return redirect("/dashboard");
   }
 
@@ -84,10 +88,12 @@ export async function editProduct(prevState: any, formData: FormData) {
 }
 
 export async function deleteProduct(formData: FormData) {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const user = await currentUser();
 
-  if (!user || user.email === "decentdelight2022@gmail.com") {
+  if (
+    !user ||
+    user?.emailAddresses?.[0]?.emailAddress === "decentdelight2022@gmail.com"
+  ) {
     return redirect("/dashboard");
   }
 
@@ -101,8 +107,7 @@ export async function deleteProduct(formData: FormData) {
 }
 
 export async function addItem(productId: string) {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const user = await currentUser();
 
   if (!user) {
     return redirect("/dashboard");
@@ -170,8 +175,7 @@ export async function addItem(productId: string) {
 }
 
 export async function deleteItem(formData: FormData) {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const user = await currentUser();
 
   if (!user) {
     return redirect("/dashboard");

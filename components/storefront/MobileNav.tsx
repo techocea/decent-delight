@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-import { navLinks } from "@/lib/constants";
+import { NAV_ITEMS } from "@/lib/constants";
 import Link from "next/link";
 import { MenuIcon, X } from "lucide-react";
 
@@ -23,11 +23,11 @@ export default function MobileNav() {
       {showNav && (
         <nav className="absolute top-16 z-10 left-0 w-full bg-accent shadow-md lg:hidden">
           <ul className="flex flex-col items-center py-4">
-            {navLinks.map((item) => (
+            {/* {NAV_ITEMS.map((item) => (
               <li key={item.label} className="mb-4">
-                <Link href={item.url}>{item.label}</Link>
+                <Link href={item.href}>{item.label}</Link>
               </li>
-            ))}
+            ))} */}
           </ul>
         </nav>
       )}

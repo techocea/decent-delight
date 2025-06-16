@@ -1,10 +1,10 @@
 import prisma from "@/app/lib/db";
 import FeaturedProducts from "@/components/storefront/FeaturedProducts";
 import ImageGallery from "@/components/storefront/ImageGallery";
-import { StarIcon } from "lucide-react";
 import { notFound } from "next/navigation";
 import { unstable_noStore as noStore } from "next/cache";
 import PlaceOrderButton from "@/components/storefront/PlaceOrderButton";
+import ProductDetailsCard from "@/components/storefront/ProductDetailsCard";
 
 async function getData(productId: string) {
   const data = await prisma.product.findUnique({
@@ -17,6 +17,7 @@ async function getData(productId: string) {
       description: true,
       price: true,
       images: true,
+      category: true,
     },
   });
 
@@ -34,36 +35,23 @@ export default async function SingleProductPage({
 }) {
   noStore();
   const data = await getData(params.id);
-  return (
-    <>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start lg:gap-24 py-16 px-4">
-        <ImageGallery images={data.images} />
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-primary">
-            {data.name}
-          </h1>
-          <p className="font-semibold text-xl mt-2">Rs {data.price}</p>
-          <div className="mt-3 flex items-center gap-1">
-            <StarIcon className="h-4 w-4 text-yellow-500 fill-yellow-500" />
-            <StarIcon className="h-4 w-4 text-yellow-500 fill-yellow-500" />
-            <StarIcon className="h-4 w-4 text-yellow-500 fill-yellow-500" />
-            <StarIcon className="h-4 w-4 text-yellow-500 fill-yellow-500" />
-            <StarIcon className="h-4 w-4 text-yellow-500 fill-yellow-500" />
-          </div>
-          <p className="mt-6 text-base text-gray">{data.description}</p>
 
-          <div className="mt-4">
-            <PlaceOrderButton
-              productName={data.name}
-              productPrice={data.price}
-            />
-          </div>
+  return (
+    <div className="lg:max-w-5xl mx-auto lg:p-16 pb-32 px-4 lg:px-0">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 py-8">
+        {/* Left side - Image Gallery */}
+        <div>
+          <ImageGallery images={data.images} />
         </div>
+
+        {/* Right side - Product Details */}
+        <ProductDetailsCard data={data} />
       </div>
 
-      <div>
+      {/* Related Products */}
+      <div className="mt-16">
         <FeaturedProducts />
       </div>
-    </>
+    </div>
   );
 }
