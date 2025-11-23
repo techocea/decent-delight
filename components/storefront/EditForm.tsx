@@ -27,13 +27,13 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { ChevronLeft, XIcon } from "lucide-react";
-import { UploadDropzone } from "@/app/lib/uploadthing";
+import { UploadDropzone } from "@/lib/uploadthing";
 import { SubmitButton } from "../ui/submit-button";
 import { categories } from "@/lib/constants";
-import {  editProduct } from "@/app/actions";
+import { editProduct } from "@/app/actions";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
-import { productSchema } from "@/app/lib/zodSchemas";
+import { productSchema } from "@/lib/zodSchemas";
 import { type $Enums } from "@prisma/client";
 
 interface iAppProps {

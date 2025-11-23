@@ -7,7 +7,6 @@ import { SearchIcon, ShoppingBagIcon, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import CartModal from "./MobileNav";
-import inter from "@/lib/fonts";
 
 const NavIconBar = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -29,7 +28,7 @@ const NavIconBar = () => {
   };
   return (
     <div className="relative flex gap-4 items-center justify-center">
-      <SearchIcon/>
+      <SearchIcon />
       <User
         className="text-primary cursor-pointer"
         onClick={handleClickProfile}
@@ -43,7 +42,7 @@ const NavIconBar = () => {
       <div className="relative">
         <ShoppingBagIcon className="text-primary cursor-pointer" onClick={handleClickCart} />
         <div
-          className={`${inter.className} flex items-center justify-center absolute -top-4 -right-4 bg-red-500 rounded-full w-6 h-6 text-white`}
+          className={`flex items-center justify-center absolute -top-4 -right-4 bg-red-500 rounded-full w-6 h-6 text-white`}
         >
           2
         </div>

@@ -23,12 +23,12 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 
 import { ChevronLeft, XIcon } from "lucide-react";
-import { UploadDropzone } from "@/app/lib/uploadthing";
+import { UploadDropzone } from "@/lib/uploadthing";
 import { useFormState } from "react-dom";
 import { createProduct } from "@/app/actions";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
-import { productSchema } from "@/app/lib/zodSchemas";
+import { productSchema } from "@/lib/zodSchemas";
 import { useState } from "react";
 import Image from "next/image";
 import { categories } from "@/lib/constants";
@@ -206,7 +206,7 @@ export default function ProductCreate() {
             </div>
           </CardContent>
           <CardFooter>
-            <SubmitButton text="Create Product"/>
+            <SubmitButton text="Create Product" />
           </CardFooter>
         </Card>
       </form>

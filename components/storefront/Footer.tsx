@@ -8,55 +8,75 @@ import { FaFacebook, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-accent lg:max-w-7xl 2xl:max-w-screen-2xl w-full lg:py-10 lg:px-8 p-4">
-      <div className="flex max-md:flex-col justify-between w-full lg:items-start lg:gap-4 gap-10">
-        <div className="flex flex-col gap-4 lg:max-w-sm">
-          <Image
-            src="/logo.png"
-            width={231}
-            height={60}
-            className="max-md:w-[50%] object-contain "
-            alt="Decent Delight"
-          />
-          <h3>Negombo,Sri Lanka</h3>
-          <h3>decentdelight2022@gmail.com</h3>
-          <p>+94769201150</p>
-          <div className="flex flex-col gap-2">
-            <p>Follow us on</p>
-            <div className="flex gap-3">
-              <FaFacebook />
-              <FaInstagram />
-              <FaTiktok />
-              <FaYoutube />
+    <footer className="text-primary lg:max-w-6xl xl:max-w-5xl w-full mx-auto lg:pt-10 border-t">
+      <div className="flex flex-col font-sans">
+        <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 w-full gap-2 lg:px-8 p-4">
+          <div className="flex flex-col gap-4 lg:max-w-sm">
+            <Image
+              src="/logo.png"
+              width={231}
+              height={60}
+              className="max-md:w-[50%] object-contain "
+              alt="Decent Delight"
+            />
+
+            <div className="flex flex-col gap-2">
+              <p>Follow us on</p>
+              <div className="flex gap-3">
+                <FaFacebook />
+                <FaInstagram />
+                <FaTiktok />
+                <FaYoutube />
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4">
+              <p className="font-bold">OUR SHOP</p>
+              {["About us", "Privacy Policy", "Refund Policy"].map((item) => (
+                <p key={item} className="text-sm">
+                  {item}
+                </p>
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-col gap-4">
+            <p className="font-bold">CONTACT</p>
+            {[
+              "Negombo, Sri Lanka",
+              "decentdelight2022@gmail.com",
+              "+94769201150",
+            ].map((item) => (
+              <p key={item} className="text-sm">
+                {item}
+              </p>
+            ))}
+          </div>
+          <div className="flex flex-col">
+            <p className="font-semibold pb-2 uppercase">Subscribe us</p>
+            <div className="flex">
+              <Input
+                placeholder="Enter your email address"
+                className="rounded-none"
+              />
+              <Button className="rounded-none">Subscribe</Button>
+            </div>
+            <div className="mt-4">
+              <p className="font-semibold pb-2 uppercase">
+                Secure payment options
+              </p>
+              <div className="flex"></div>
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-4">
-          <h3 className="font-bold">COMPANY</h3>
-          <ul className="flex flex-col gap-4">
-            <li>About us</li>
-            <li>Privacy Policy</li>
-            <li>Refund Policy</li>
-          </ul>
-        </div>
-        <div className="flex flex-col gap-4">
-          <h3 className="font-bold">SHOP</h3>
-          {/* {NAV_ITEMS.map((item) => (
-            <Link href={item.href} key={item.label}>
-              {item.label}
-            </Link>
-          ))} */}
-        </div>
-        <div className="flex flex-col">
-          <h3 className="font-semibold pb-2">Subscribe to our newsletter</h3>
-          <div className="flex">
-            <Input placeholder="Enter your email address" />
-            <Button>Subscribe</Button>
-          </div>
-          <div className="mt-4">
-            <h3 className="font-semibold pb-2">Secure payment options</h3>
-            <div className="flex"></div>
-          </div>
+        <div className="mt-8 border-t px-0 py-4">
+          <p className="text-center text-sm">
+            &copy; {new Date().getFullYear()} Decent Delight. All rights
+            reserved.
+          </p>
+          <p className="text-center text-sm">
+            Developed by <Link href="www.webizera.com">Webizera</Link>
+          </p>
         </div>
       </div>
     </footer>

@@ -1,9 +1,8 @@
-import prisma from "@/app/lib/db";
+import prisma from "@/lib/db";
 import FeaturedProducts from "@/components/storefront/FeaturedProducts";
 import ImageGallery from "@/components/storefront/ImageGallery";
 import { notFound } from "next/navigation";
 import { unstable_noStore as noStore } from "next/cache";
-import PlaceOrderButton from "@/components/storefront/PlaceOrderButton";
 import ProductDetailsCard from "@/components/storefront/ProductDetailsCard";
 
 async function getData(productId: string) {
