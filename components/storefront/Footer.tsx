@@ -1,4 +1,3 @@
-import { NAV_ITEMS } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";

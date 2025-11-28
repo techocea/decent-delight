@@ -1,15 +1,12 @@
-"use client";
-
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { NAV_ITEMS } from "@/lib/constants";
-import clsx from "clsx";
-import { ChevronDown, ShoppingBagIcon, User } from "lucide-react";
+import { User } from "lucide-react";
+import CartIcon from "./CartIcon";
+
 
 const Navbar = () => {
-
-
   return (
     <div className="relative">
       <header className="bg-white lg:max-w-7xl flex items-center h-16 justify-between w-full px-4 lg:py-6 lg:px-8">
@@ -27,13 +24,15 @@ const Navbar = () => {
         <nav className="hidden lg:flex gap-6">
           <ul className="flex space-x-6 relative">
             {NAV_ITEMS.map((item, index) => (
-              <Link key={index} href={item.href}>{item.label}</Link>
+              <Link key={index} href={item.href}>
+                {item.label}
+              </Link>
             ))}
           </ul>
         </nav>
 
         <div className="flex items-center gap-2 justify-between">
-          <ShoppingBagIcon />
+          <CartIcon />
           <User />
         </div>
       </header>
