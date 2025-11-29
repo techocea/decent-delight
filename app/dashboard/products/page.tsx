@@ -1,12 +1,6 @@
 import prisma from "@/lib/db";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,65 +19,62 @@ import { MoreVertical, PlusCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { unstable_noStore as noStore } from "next/cache";
+import { PRODUCTS } from "@/lib/constants";
 
-async function getData() {
-  const data = await prisma.product.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
-  return data;
-}
+// async function getData() {
+//   const data = await prisma.product.findMany({
+//     orderBy: {
+//       createdAt: "desc",
+//     },
+//   });
+//   return data;
+// }
 
 export default async function ProductsRoute() {
   noStore();
-  const data = await getData();
+  // const data = await getData();
   return (
-    <>
-      <div className="flex items-center justify-end">
+    <div className="flex flex-col gap-6 py-6">
+      <div className="flex items-center justify-between w-full">
+        <div>
+          <h2 className="font-bold text-2xl">Products</h2>
+          <p className="text-muted-foreground text-sm">Manage your products </p>
+        </div>
         <Button asChild className="flex items-center gap-2">
-          <Link href="/dashboard/products/create ">
+          <Link href="/dashboard/products/create">
             <PlusCircle className="w-4 h-4" />
             Add Product
           </Link>
         </Button>
       </div>
 
-      <Card className="mt-5">
-        <CardHeader>
-          <CardTitle>Products</CardTitle>
-          <CardDescription>Manage your products </CardDescription>
-        </CardHeader>
+      <Card className="mt-4 bg-white">
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Image</TableHead>
                 <TableHead>Name</TableHead>
-                <TableHead>Status</TableHead>
                 <TableHead>Price</TableHead>
-                <TableHead>Date</TableHead>
                 <TableHead className="text-end">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data.map((item: any) => (
+              {PRODUCTS.map((item) => (
                 <TableRow key={item.id}>
                   <TableCell>
-                    <Image
-                      src={item.images[0]}
-                      width={50}
-                      height={50}
-                      className="rounded-lg object-cover h-16 w-16"
-                      alt="product image"
-                    />
+                    <div className="w-28 h-24 flex-shrink-0 bg-gray-100 rounded-md overflow-hidden">
+                      <Image
+                        src={item.imageUrl}
+                        width={104}
+                        height={96}
+                        className="object-cover w-full h-full"
+                        alt="product image"
+                      />
+                    </div>
                   </TableCell>
                   <TableCell>{item.name}</TableCell>
-                  <TableCell>{item.status}</TableCell>
-                  <TableCell>Rs {item.price}</TableCell>
-                  <TableCell>
-                    {new Intl.DateTimeFormat("en-US").format(item.createdAt)}
-                  </TableCell>
+                  <TableCell>$ {item.price.toFixed(2)}</TableCell>
                   <TableCell className="text-end">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -93,10 +84,14 @@ export default async function ProductsRoute() {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem asChild>
-                          <Link href={`/dashboard/products/${item.id}`}>Edit</Link>
+                          <Link href={`/dashboard/products/${item.id}`}>
+                            Edit
+                          </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
-                          <Link href={`/dashboard/products/${item.id}/delete`}>Delete</Link>
+                          <Link href={`/dashboard/products/${item.id}/delete`}>
+                            Delete
+                          </Link>
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -107,6 +102,6 @@ export default async function ProductsRoute() {
           </Table>
         </CardContent>
       </Card>
-    </>
+    </div>
   );
 }

@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { unstable_noStore as noStore } from "next/cache";
-import { SignOutButton } from "@clerk/nextjs";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -31,7 +30,7 @@ export default async function DashboardLayout({
   return (
     <div
       className={cn(
-        "flex w-full flex-col max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+        "flex w-full flex-col lg:max-w-6xl mx-auto",
         poppins.className
       )}
     >
@@ -68,9 +67,9 @@ export default async function DashboardLayout({
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
+            {/* <DropdownMenuItem asChild>
               <SignOutButton>Log out</SignOutButton>
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       </header>

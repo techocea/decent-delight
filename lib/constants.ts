@@ -93,7 +93,7 @@ export const PRODUCTS = [
   {
     id: "1",
     name: "Chocolate Cake",
-    price: 25.0,
+    price: 25.00,
     weight:"1kg",
     imageUrl: "/image-1.png",
     description:
@@ -102,7 +102,7 @@ export const PRODUCTS = [
   {
     id: "2",
     name: "Vanilla Cake",
-    price: 45.0,
+    price: 45.00,
     weight:"1kg",
     imageUrl: "/image-2.png",
     description:
@@ -111,7 +111,7 @@ export const PRODUCTS = [
   {
     id: '3',
     name: "Chocolate Cup-Cake",
-    price: 15.0,
+    price: 15.00,
     weight:"1kg",
     imageUrl: "/image-3.png",
     description:
@@ -120,7 +120,7 @@ export const PRODUCTS = [
   {
     id: "4",
     name: "Vanilla Cup-Cake",
-    price: 12.0,
+    price: 12.00,
     weight:"1kg",
     imageUrl: "/image-4.png",
     description:
@@ -129,7 +129,7 @@ export const PRODUCTS = [
   {
     id: "5",
     name: "Strawberry Cake",
-    price: 30.0,
+    price: 30.00,
     weight:"1kg",
     imageUrl: "/cake_jar.jpg",
     description:
@@ -137,7 +137,7 @@ export const PRODUCTS = [
   },{
     id: "6",
     name: "Red Velvet Cake",
-    price: 35.0,
+    price: 35.00,
     weight:"1kg",
     imageUrl: "/cookies.jpg",
     description:
@@ -145,7 +145,7 @@ export const PRODUCTS = [
   },{
     id: "7",
     name: "Lemon Cake",
-    price: 28.0,
+    price: 28.00,
     weight:"1kg",
     imageUrl: "/cupcakes.jpg",
     description:

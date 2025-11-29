@@ -29,7 +29,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ChevronLeft, XIcon } from "lucide-react";
 import { UploadDropzone } from "@/lib/uploadthing";
 import { SubmitButton } from "../ui/submit-button";
-import { categories } from "@/lib/constants";
+// import { categories } from "@/lib/constants";
 import { editProduct } from "@/app/actions";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";

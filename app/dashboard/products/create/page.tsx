@@ -1,6 +1,6 @@
 "use client";
-import Link from "next/link";
 
+import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -25,13 +25,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { ChevronLeft, XIcon } from "lucide-react";
 import { UploadDropzone } from "@/lib/uploadthing";
 import { useFormState } from "react-dom";
-import { createProduct } from "@/app/actions";
+// import { createProduct } from "@/app/actions";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { productSchema } from "@/lib/zodSchemas";
 import { useState } from "react";
 import Image from "next/image";
-import { categories } from "@/lib/constants";
 import { SubmitButton } from "@/components/ui/submit-button";
 
 export default function ProductCreate() {
@@ -152,12 +151,12 @@ export default function ProductCreate() {
                     <SelectValue placeholder="Select category"></SelectValue>
                   </SelectTrigger>
                   <SelectContent>
-                    {categories.map((category) => (
+                    {/* {categories.map((category) => (
                       <SelectItem
                         key={category.id}
                         value={category.name}
                       >{category.title}</SelectItem>
-                    ))}
+                    ))} */}
                   </SelectContent>
                 </Select>
                 <p className="text-red-500">{fields.category.errors}</p>
