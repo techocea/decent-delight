@@ -1,12 +1,5 @@
-import prisma from "@/lib/db";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
   Table,
   TableBody,
@@ -15,26 +8,28 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { MoreVertical, PlusCircle } from "lucide-react";
+import { SquarePen, PlusCircle, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { unstable_noStore as noStore } from "next/cache";
-import { PRODUCTS } from "@/lib/constants";
+import { db } from "@/lib/db";
+import { products } from "@/lib/schema";
+import { desc } from "drizzle-orm";
 
-// async function getData() {
-//   const data = await prisma.product.findMany({
-//     orderBy: {
-//       createdAt: "desc",
-//     },
-//   });
-//   return data;
-// }
+async function getData() {
+  const data = await db
+    .select()
+    .from(products)
+    .orderBy(desc(products.createdAt));
+  return data;
+}
 
 export default async function ProductsRoute() {
   noStore();
-  // const data = await getData();
+  const data = await getData();
+
   return (
-    <div className="flex flex-col gap-6 py-6">
+    <div className="flex flex-col gap-6 py-6 px-4">
       <div className="flex items-center justify-between w-full">
         <div>
           <h2 className="font-bold text-2xl">Products</h2>
@@ -49,7 +44,7 @@ export default async function ProductsRoute() {
       </div>
 
       <Card className="mt-4 bg-white">
-        <CardContent>
+        <CardContent className="pb-0">
           <Table>
             <TableHeader>
               <TableRow>
@@ -60,7 +55,7 @@ export default async function ProductsRoute() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {PRODUCTS.map((item) => (
+              {data.map((item) => (
                 <TableRow key={item.id}>
                   <TableCell>
                     <div className="w-28 h-24 flex-shrink-0 bg-gray-100 rounded-md overflow-hidden">
@@ -74,27 +69,17 @@ export default async function ProductsRoute() {
                     </div>
                   </TableCell>
                   <TableCell>{item.name}</TableCell>
-                  <TableCell>$ {item.price.toFixed(2)}</TableCell>
-                  <TableCell className="text-end">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                          <MoreVertical />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem asChild>
-                          <Link href={`/dashboard/products/${item.id}`}>
-                            Edit
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link href={`/dashboard/products/${item.id}/delete`}>
-                            Delete
-                          </Link>
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                  <TableCell>LKR {item.price.toFixed(2)}</TableCell>
+                  <TableCell align="center">
+                    <div className="flex items-center justify-end gap-2">
+                      <Link href={`/dashboard/products/${item.id}`}>
+                        <SquarePen className="text-blue-500" />
+                      </Link>
+
+                      <Link href={`/dashboard/products/${item.id}/delete`}>
+                        <Trash2 className="text-red-500" />
+                      </Link>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}

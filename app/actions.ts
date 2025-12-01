@@ -1,10 +1,11 @@
 "use server";
 
-import prisma from "@/lib/db";
-import { redirect } from "next/navigation";
-import { parseWithZod } from "@conform-to/zod";
+import { db } from "@/lib/db";
+import { products } from "@/lib/schema";
 import { productSchema } from "@/lib/zodSchemas";
+import { parseWithZod } from "@conform-to/zod";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function createProduct(prevState: unknown, formData: FormData) {
   const submission = parseWithZod(formData, {
@@ -15,61 +16,14 @@ export async function createProduct(prevState: unknown, formData: FormData) {
     return submission.reply();
   }
 
-  const flattenUrls = submission.value.images.flatMap((urlString) =>
-    urlString.split(",").map((url) => url.trim())
-  );
-
-  await prisma.product.create({
-    data: {
-      name: submission.value.name,
-      description: submission.value.description,
-      status: submission.value.status,
-      price: submission.value.price,
-      images: flattenUrls,
-      category: submission.value.category,
-      isMostDelicious: submission.value.isMostDelicious === true ? true : false,
-    },
-  });
-  redirect("/dashboard/products");
-}
-
-export async function editProduct(prevState: any, formData: FormData) {
-  const submission = parseWithZod(formData, {
-    schema: productSchema,
+  await db.insert(products).values({
+    name: formData.get("name") as string,
+    description: formData.get("description") as string,
+    weight: formData.get("weight") as string,
+    imageUrl: formData.get("imageUrl") as string,
+    price: Number(formData.get("price")),
   });
 
-  if (submission.status != "success") {
-    return submission.reply();
-  }
-  const flattenUrls = submission.value.images.flatMap((urlString) =>
-    urlString.split(",").map((url) => url.trim())
-  );
-
-  const productId = formData.get("productId") as string;
-  await prisma.product.update({
-    where: {
-      id: productId,
-    },
-    data: {
-      name: submission.value.name,
-      description: submission.value.description,
-      category: submission.value.category,
-      price: submission.value.price,
-      isMostDelicious: submission.value.isMostDelicious === true ? true : false,
-      status: submission.value.status,
-      images: flattenUrls,
-    },
-  });
-
-  redirect("/dashboard/products");
-}
-
-export async function deleteProduct(formData: FormData) {
-  await prisma.product.delete({
-    where: {
-      id: formData.get("productId") as string,
-    },
-  });
-
+  revalidatePath("/dashboard/products");
   redirect("/dashboard/products");
 }

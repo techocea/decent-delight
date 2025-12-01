@@ -6,11 +6,12 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:seed": "node --import tsx --env-file .env ./drizzle/seed.ts"
   },
   "dependencies": {
-    "@conform-to/react": "^1.10.0",
-    "@conform-to/zod": "^1.10.0",
+    "@conform-to/react": "^1.13.3",
+    "@conform-to/zod": "^1.13.3",
     "@hookform/resolvers": "^5.2.2",
     "@neondatabase/serverless": "^1.0.2",
     "@radix-ui/react-alert-dialog": "^1.1.15",
@@ -41,7 +42,7 @@
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
     "uploadthing": "^7.7.4",
-    "zod": "^4.1.9",
+    "zod": "^3.20.2",
     "zustand": "^5.0.8"
   },
   "devDependencies": {
