@@ -39,7 +39,7 @@ export default function ProductCreate() {
 
   return (
     <>
-      <form id={form.id} onSubmit={form.onSubmit} action={action}>
+      <form id={form.id} onSubmit={form.onSubmit} action={action} className="sm:px-4 md:px-8 lg:px-10 w-full mx-auto">
         <div className="flex items-center gap-4">
           <Button variant="outline" size="icon" asChild>
             <Link href="/dashboard/products">
@@ -49,7 +49,7 @@ export default function ProductCreate() {
           <h1 className="text-xl font-semibold tracking-tight">New Product</h1>
         </div>
 
-        <Card className="mt-5 bg-white lg:px-4 w-full mx-auto">
+        <Card className="mt-5 bg-white">
           <CardHeader>
             <CardTitle>Product Details</CardTitle>
             <CardDescription className="text-sm">

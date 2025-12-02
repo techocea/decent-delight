@@ -29,7 +29,7 @@ export default async function ProductsRoute() {
   const data = await getData();
 
   return (
-    <div className="flex flex-col gap-6 py-6 px-4">
+    <div className="flex flex-col gap-6 py-6 sm:px-4 md:px-8 lg:px-10 w-full mx-auto">
       <div className="flex items-center justify-between w-full">
         <div>
           <h2 className="font-bold text-2xl">Products</h2>
@@ -51,6 +51,7 @@ export default async function ProductsRoute() {
                 <TableHead>Image</TableHead>
                 <TableHead>Name</TableHead>
                 <TableHead>Price</TableHead>
+                <TableHead>Weight</TableHead>
                 <TableHead className="text-end">Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -58,7 +59,7 @@ export default async function ProductsRoute() {
               {data.map((item) => (
                 <TableRow key={item.id}>
                   <TableCell>
-                    <div className="w-28 h-24 flex-shrink-0 bg-gray-100 rounded-md overflow-hidden">
+                    <div className="w-28 h-24 shrink-0 bg-gray-100 rounded-md overflow-hidden">
                       <Image
                         src={item.imageUrl}
                         width={104}
@@ -69,7 +70,8 @@ export default async function ProductsRoute() {
                     </div>
                   </TableCell>
                   <TableCell>{item.name}</TableCell>
-                  <TableCell>LKR {item.price.toFixed(2)}</TableCell>
+                  <TableCell>LKR {item.price}</TableCell>
+                  <TableCell>{item.weight}</TableCell>
                   <TableCell align="center">
                     <div className="flex items-center justify-end gap-2">
                       <Link href={`/dashboard/products/${item.id}`}>

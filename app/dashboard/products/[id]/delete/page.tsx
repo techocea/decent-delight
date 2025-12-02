@@ -13,20 +13,20 @@ import Link from "next/link";
 export default function DeleteProduct({ params }: { params: { id: string } }) {
   return (
     <div className="h-[80vh] w-full flex items-center justify-center">
-      <Card className="max-w-xl">
+      <Card className="max-w-xl bg-white">
         <CardHeader>
           <CardTitle>Are you absolutely sure?</CardTitle>
-          <CardDescription>
+          <CardDescription className="pt-3 text-sm">
             This action cannot be undone. This will permanently delete this
             product and remove all data from our servers.
           </CardDescription>
         </CardHeader>
-        <CardFooter className="w-full flex justify-end gap-4">
+        <CardFooter className="w-full flex justify-end gap-4 pt-0">
           <Button variant="outline" asChild>
             <Link href="/dashboard/products">Cancel</Link>
           </Button>
           <form action={deleteProduct}>
-            <input type="hidden" name="productId" value={params.id} />
+            <input type="hidden" name="id" value={params.id} />
             <SubmitButton variant="destructive" text="Delete Product"/>
           </form>
         </CardFooter>

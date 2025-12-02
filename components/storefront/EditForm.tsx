@@ -2,10 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-
-import { useState } from "react";
-import { useFormState } from "react-dom";
-
+import { useActionState } from "react";
 import {
   Card,
   CardContent,
@@ -14,47 +11,40 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { ChevronLeft, XIcon } from "lucide-react";
-import { UploadDropzone } from "@/lib/uploadthing";
+import { UploadButton } from "@/lib/uploadthing";
 import { SubmitButton } from "../ui/submit-button";
-// import { categories } from "@/lib/constants";
-import { editProduct } from "@/app/actions";
+import { updateProduct } from "@/app/actions";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { productSchema } from "@/lib/zodSchemas";
-import { type $Enums } from "@prisma/client";
 
 interface iAppProps {
   data: {
     id: string;
     name: string;
     description: string;
-    status: $Enums.ProductStatus;
+    weight: string;
     price: number;
-    images: string[];
-    category: $Enums.Category;
-    isMostDelicious: boolean;
+    imageUrl: string;
   };
 }
 
-export function EditForm({ data }: iAppProps) {
-  const [images, setImages] = useState<string[]>(data.images);
-
-  const [lastResult, action] = useFormState(editProduct, undefined);
+const EditForm = ({ data }: iAppProps) => {
+  const [lastResult, action] = useActionState(updateProduct, undefined);
   const [form, fields] = useForm({
     lastResult,
+    defaultValue: {
+      name: data.name,
+      description: data.description,
+      weight: data.weight,
+      price: data.price,
+      imageUrl: data.imageUrl,
+    },
 
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: productSchema });
@@ -64,14 +54,10 @@ export function EditForm({ data }: iAppProps) {
     shouldRevalidate: "onInput",
   });
 
-  const handleDelete = (index: number) => {
-    setImages(images.filter((_, i) => i !== index));
-  };
-
   return (
     <>
-      <form id={form.id} onSubmit={form.onSubmit} action={action}>
-        <input type="hidden" name="productId" value={data.id} />
+      <form id={form.id} onSubmit={form.onSubmit} action={action} className="sm:px-4 md:px-8 lg:px-10 w-full mx-auto">
+        <input type="hidden" name="id" value={data.id} />
         <div className="flex items-center gap-4">
           <Button variant="outline" size="icon" asChild>
             <Link href="/dashboard/products">
@@ -81,7 +67,7 @@ export function EditForm({ data }: iAppProps) {
           <h1 className="text-xl font-semibold tracking-tight">Edit Product</h1>
         </div>
 
-        <Card className="mt-5">
+        <Card className="mt-5 bg-white">
           <CardHeader>
             <CardTitle>Product Details</CardTitle>
             <CardDescription>
@@ -118,6 +104,19 @@ export function EditForm({ data }: iAppProps) {
               </div>
 
               <div className="flex flex-col gap-3">
+                <Label>Weight</Label>
+                <Input
+                  type="text"
+                  key={fields.weight.key}
+                  name={fields.weight.name}
+                  defaultValue={fields.weight.initialValue}
+                  className="w-full"
+                  placeholder="Product weight"
+                />
+                <p className="text-red-500">{fields.weight.errors}</p>
+              </div>
+
+              <div className="flex flex-col gap-3">
                 <Label>Price (Rs)</Label>
                 <Input
                   type="number"
@@ -131,93 +130,51 @@ export function EditForm({ data }: iAppProps) {
               </div>
 
               <div className="flex flex-col gap-3">
-                <Label>Most Delicious</Label>
-                <Switch
-                  key={fields.isMostDelicious.key}
-                  name={fields.isMostDelicious.name}
-                  defaultChecked={data.isMostDelicious}
-                />
-                <p className="text-red-500">{fields.isMostDelicious.errors}</p>
-              </div>
-
-              <div className="flex flex-col gap-3">
-                <Label>Status</Label>
-                <Select
-                  key={fields.status.key}
-                  name={fields.status.name}
-                  defaultValue={data.status}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="draft">Draft</SelectItem>
-                    <SelectItem value="published">Published</SelectItem>
-                    <SelectItem value="archived">Archived</SelectItem>
-                  </SelectContent>
-                </Select>
-                <p className="text-red-500">{fields.status.errors}</p>
-              </div>
-              <div className="flex flex-col gap-3">
-                <Label>Category</Label>
-                <Select
-                  key={fields.category.key}
-                  name={fields.category.name}
-                  defaultValue={data.category}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select category"></SelectValue>
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((category) => (
-                      <SelectItem key={category.id} value={category.name}>
-                        {category.title}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <p className="text-red-500">{fields.category.errors}</p>
-              </div>
-              <div className="flex flex-col gap-3">
                 <Label>Images</Label>
                 <input
                   type="hidden"
-                  value={images}
-                  key={fields.images.key}
-                  name={fields.images.name}
-                  defaultValue={fields.images.initialValue as any}
+                  value={fields.imageUrl.value}
+                  key={fields.imageUrl.key}
+                  name={fields.imageUrl.name}
                 />
-                {images.length > 0 ? (
+                {fields.imageUrl.value ? (
                   <div className="flex gap-5">
-                    {images.map((image, index) => (
-                      <div key={index} className="relative w-[100px] h-[100px]">
-                        <Image
-                          height={100}
-                          width={100}
-                          src={image}
-                          className="w-full h-full object-cover rounded-lg"
-                          alt="product image"
-                        />
-                        <button
-                          onClick={() => handleDelete(index)}
-                          type="button"
-                          className="absolute -top-2 -right-3 bg-red-500 p-2 rounded-lg"
-                        >
-                          <XIcon className="w-3 h-3" />
-                        </button>
-                      </div>
-                    ))}
+                    <div className="relative w-[100px] h-[100px]">
+                      <Image
+                        height={100}
+                        width={100}
+                        src={fields.imageUrl.value}
+                        className="w-full h-full object-cover rounded-lg"
+                        alt="product image"
+                      />
+                      <button
+                        onClick={() =>
+                          form.update({ name: fields.imageUrl.name, value: "" })
+                        }
+                        type="button"
+                        className="absolute -top-2 -right-3 bg-red-500 p-2 rounded-lg"
+                      >
+                        <XIcon className="w-3 h-3" />
+                      </button>
+                    </div>
                   </div>
                 ) : (
-                  <UploadDropzone
-                    endpoint="imageUploader"
-                    onClientUploadComplete={(res) =>
-                      setImages(res.map((r) => r.url))
-                    }
-                    onUploadError={() => alert("something went wrong!")}
-                  />
+                  <div className="border rounded-lg flex items-center justify-center w-full h-40">
+                    <UploadButton
+                      endpoint="imageUploader"
+                      className="ut-button:px-2 ut-button:py-1.5 ut-button:bg-blue-500 ut-button:hover:bg-blue-500/50 ut-button:ut-readying:bg-blue-500/50"
+                      onClientUploadComplete={(res) => {
+                        const uploadedUrl = res[0].ufsUrl || res[0].url;
+                        form.update({
+                          name: fields.imageUrl.name,
+                          value: uploadedUrl,
+                        });
+                      }}
+                      onUploadError={() => alert("something went wrong!")}
+                    />
+                  </div>
                 )}
-                <p className="text-red-500">{fields.images.errors}</p>
+                <p className="text-red-500">{fields.imageUrl.errors}</p>
               </div>
             </div>
           </CardContent>
@@ -228,4 +185,6 @@ export function EditForm({ data }: iAppProps) {
       </form>
     </>
   );
-}
+};
+
+export default EditForm;
