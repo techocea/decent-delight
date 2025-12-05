@@ -3,7 +3,7 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { Minus, Plus } from "lucide-react";
-import useStore, { Product } from "@/store";
+import useStore, { Product } from "@/store/store";
 
 interface iAppProps {
   product: Product;

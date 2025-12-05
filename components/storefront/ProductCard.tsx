@@ -1,33 +1,32 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Product } from "@/store/store";
 import { Skeleton } from "../ui/skeleton";
-import { Product } from "@/store";
+import { useRouter } from "next/navigation";
 import AddToCartButton from "./AddToCartButton";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface iAppProps {
   product: Product;
 }
 
 export default function ProductCard({ product }: iAppProps) {
-  if (!product) {
-    return <LoadingProductCard />;
-  }
+  const router = useRouter();
+
   return (
-    <Card className="rounded-none bg-white shadow-lg">
+    <Card
+      onClick={() => router.push(`/product/${product.id}`)}
+      className="rounded-none bg-white shadow-lg cursor-pointer hover:shadow-2xl"
+    >
       <CardHeader className="items-center text-center py-4">
         <CardTitle className="text-sm sm:text-base">{product.name}</CardTitle>
         <p className="text-xs sm:text-sm font-sans">{product.weight}</p>
       </CardHeader>
       <CardContent className="w-full h-40 sm:h-50vh lg:h-[220px] flex items-center justify-center">
         <Image
-          src={product?.imageUrl}
+          src={product.imageUrl}
           width={200}
           height={180}
           alt={product.name}
@@ -35,9 +34,9 @@ export default function ProductCard({ product }: iAppProps) {
         />
       </CardContent>
       <div className="max-sm:flex-col-reverse flex gap-2 w-full items-center p-4 sm:p-6 justify-between">
-        <AddToCartButton product={product} />
-        <p className="font-semibold text-base sm:text-lg text-primary">
-          $ {product.price.toFixed(2)}
+        <AddToCartButton mode="catalog" product={product} />
+        <p className="font-semibold text-base sm:text-sm text-primary">
+          Rs {product.price}
         </p>
       </div>
     </Card>

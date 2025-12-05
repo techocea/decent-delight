@@ -3,11 +3,9 @@ import { integer, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 export const roleEnum = pgEnum("role", ["user", "admin"]);
 
 export const users = pgTable("users", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
+  id: text("id").primaryKey(),
   email: text("email").notNull().unique(),
-  password: text("password").notNull(),
+  password: text("password"),
   role: roleEnum("role").default("user").notNull(),
 
   createdAt: timestamp("created_at", { withTimezone: true })
@@ -25,6 +23,7 @@ export const products = pgTable("products", {
   name: text("name").notNull(),
   price: integer("price").notNull(),
   description: text("description").notNull(),
+  additionalInfo: text("additional_information").array().notNull(),
   weight: text("weight").notNull(),
   imageUrl: text("image_url").notNull(),
 
@@ -42,9 +41,23 @@ export const orders = pgTable("orders", {
     .$defaultFn(() => crypto.randomUUID()),
 
   userId: text("user_id").references(() => users.id),
-  
+
   totalPrice: integer("total_price").notNull(),
   status: text("status").default("pending").notNull(),
+
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+});
+
+export const orderItems = pgTable("orderItems", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+
+  orderId: text("order_id").references(() => orders.id, {
+    onDelete: "cascade",
+  }),
+  productId: text("product_id").references(() => products.id),
+  quantity: integer("quantity").notNull(),
 
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
 });
@@ -58,10 +71,11 @@ export const addresses = pgTable("addresses", {
     .references(() => orders.id)
     .notNull(),
 
-  fullName: text("full_name").notNull(),
+  firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull(),
   street: text("street").notNull(),
   city: text("city").notNull(),
-  district: text("district").notNull(),
+  contact: text("contact").notNull(),
   postalCode: text("postal_code").notNull(),
-  phone: text("phone").notNull(),
+  email: text("email").notNull(),
 });

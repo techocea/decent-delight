@@ -1,8 +1,18 @@
 import React from "react";
-import { PRODUCTS } from "@/lib/constants";
 import ProductCard from "@/components/storefront/ProductCard";
+import { db } from "@/lib/db";
+import { products } from "@/lib/schema";
+import { unstable_noStore as noStore } from "next/cache";
 
-const Catalog = () => {
+async function getData() {
+  const data = await db.select().from(products);
+  return data;
+}
+
+const Catalog = async () => {
+  noStore();
+  const data = await getData();
+
   return (
     <div className="lg:max-w-6xl xl:max-w-5xl w-full mx-auto lg:py-16 lg:px-4 p-4">
       <div className="flex items-center justify-center">
@@ -11,7 +21,7 @@ const Catalog = () => {
         </h1>
       </div>
       <div className="mt-10 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 w-full gap-6">
-        {PRODUCTS.map((product) => (
+        {data.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>

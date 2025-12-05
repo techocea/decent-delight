@@ -9,6 +9,7 @@ import { ourFileRouter } from "./api/uploadthing/core";
 import { extractRouterConfig } from "uploadthing/server";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { Toaster } from "react-hot-toast";
+import { AuthProvider } from "@/providers/AuthProvider";
 
 const lora = Lora({ subsets: ["latin"], variable: "--font-lora" });
 
@@ -26,25 +27,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-7909GX1DC6"
-        ></Script>
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`window.dataLayer = window.dataLayer || [];
+    <AuthProvider>
+      <html lang="en">
+        <head>
+          <Script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-7909GX1DC6"
+          ></Script>
+          <Script id="google-analytics" strategy="afterInteractive">
+            {`window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   
   gtag('config', 'G-7909GX1DC6');`}
-        </Script>
-      </head>
-      <body className={cn("min-h-screen  antialiased", lora.className)}>
-        <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
-        <Toaster position="top-center" />
-        {children}
-      </body>
-    </html>
+          </Script>
+        </head>
+        <body className={cn("min-h-screen  antialiased", lora.className)}>
+          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+          <Toaster position="top-center" />
+          {children}
+        </body>
+      </html>
+    </AuthProvider>
   );
 }
