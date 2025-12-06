@@ -16,22 +16,26 @@ export default function ProductCard({ product }: iAppProps) {
   const router = useRouter();
 
   return (
-    <Card
-      onClick={() => router.push(`/product/${product.id}`)}
-      className="rounded-none bg-white shadow-lg cursor-pointer hover:shadow-2xl"
-    >
+    <Card className="rounded-none bg-white shadow-lg cursor-pointer max-w-64 w-full hover:shadow-2xl">
       <CardHeader className="items-center text-center py-4">
-        <CardTitle className="text-sm sm:text-base">{product.name}</CardTitle>
+        <CardTitle
+          onClick={() => router.push(`/product/${product.id}`)}
+          className="text-sm sm:text-base"
+        >
+          {product.name}
+        </CardTitle>
         <p className="text-xs sm:text-sm font-sans">{product.weight}</p>
       </CardHeader>
       <CardContent className="w-full h-40 sm:h-50vh lg:h-[220px] flex items-center justify-center">
-        <Image
-          src={product.imageUrl}
-          width={200}
-          height={180}
-          alt={product.name}
-          className="object-center aspect-square w-24 sm:w-32 lg:w-[200px] h-auto"
-        />
+        <div className="shrink-0 bg-gray-100 rounded-md overflow-hidden">
+          <Image
+            src={product.imageUrl}
+            width={200}
+            height={180}
+            alt={product.name}
+            className="object-center aspect-square w-24 sm:w-32 lg:w-[200px] h-auto"
+          />
+        </div>
       </CardContent>
       <div className="max-sm:flex-col-reverse flex gap-2 w-full items-center p-4 sm:p-6 justify-between">
         <AddToCartButton mode="catalog" product={product} />

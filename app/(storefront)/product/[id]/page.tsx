@@ -38,12 +38,12 @@ export default async function SingleProductPage({
     <div className="lg:py-16 lg:px-8 pb-32 sm:px-4 bg-white">
       <div className="lg:max-w-5xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 py-8">
         <div className="flex flex-col gap-10">
-          <div className="relative overflow-hidden rounded-lg">
+          <div className="relative flex justify-center bg-gray-100 rounded-md overflow-hidden">
             <Image
               width={500}
               height={500}
               src={imageUrl}
-              className="object-cover w-[500px] h-[500px]"
+              className="object-center w-[500px] h-[500px]"
               alt="Single product image"
             />
           </div>
@@ -57,10 +57,10 @@ export default async function SingleProductPage({
 
             <ul className="space-y-2 py-4">
               {data[0]?.additionalInfo.map((info, idx) => (
-              <li key={idx} className="flex items-center gap-2">
-                <Dot size={32} className="shrink-0" />
-                <span className="text-gray-600 text-base">{info}</span>
-              </li>
+                <li key={idx} className="flex items-center gap-2">
+                  <Dot size={32} className="shrink-0" />
+                  <span className="text-gray-600 text-base">{info}</span>
+                </li>
               ))}
             </ul>
 

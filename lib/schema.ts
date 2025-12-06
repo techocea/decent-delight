@@ -43,6 +43,7 @@ export const orders = pgTable("orders", {
   userId: text("user_id").references(() => users.id),
 
   totalPrice: integer("total_price").notNull(),
+  paymentMode: text("payment_mode").notNull(),
   status: text("status").default("pending").notNull(),
 
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),

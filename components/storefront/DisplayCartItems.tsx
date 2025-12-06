@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import { Card, CardFooter } from "../ui/card";
-import { Button } from "../ui/button";
 import Image from "next/image";
-import { Trash } from "lucide-react";
-import QuantityButtons from "./QuantityButtons";
-import { useRouter } from "next/navigation";
 import useStore from "@/store/store";
+import { Trash } from "lucide-react";
+import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
+import QuantityButtons from "./QuantityButtons";
+import { cn } from "@/lib/utils";
 
 interface iAppProps {
   mode: "checkout" | "cart-page";
@@ -19,18 +19,23 @@ const DisplayCartItems = ({ mode }: iAppProps) => {
   const totalPrice = getTotalPrice();
 
   return (
-    <Card className="bg-white p-6 font-sans flex flex-col gap-4">
+    <div
+      className={cn(
+        mode === "checkout" ? "border rounded-lg" : "border-none rounded-none",
+        "p-6 w-full bg-white"
+      )}
+    >
       <h2 className="text-xl font-semibold mb-2">Order Summary</h2>
-      <div className="flex-1 max-h-84 h-full overflow-y-scroll border-t border-b">
+      <div className="flex-1 h-full border-gray-500/50 border-t">
         {items.map(({ product, quantity }) => (
           <div
             key={product.id}
-            className="flex gap-4 py-4 pr-4 border-b last:border-b-0"
+            className="flex gap-4 py-4 pr-4 border-gray-500/50 border-b last:border-b-0"
           >
-            <div className="w-36 h-24 shrink-0 bg-gray-100 rounded-md overflow-hidden">
+            <div className="w-24 h-24 shrink-0 bg-gray-100 rounded-md overflow-hidden">
               <Image
                 src={product.imageUrl}
-                width={144}
+                width={96}
                 height={96}
                 className="object-cover w-full h-full"
                 alt={product.name}
@@ -67,26 +72,34 @@ const DisplayCartItems = ({ mode }: iAppProps) => {
             </div>
           </div>
         ))}
-      </div>
 
-      <CardFooter className="flex-col gap-4 p-0">
-        <div className="flex items-center justify-between w-full font-medium mt-2">
-          <p>Grand Total:</p>
-          <p>Rs {new Intl.NumberFormat("en-US").format(totalPrice)}</p>
-        </div>
-
-        {mode === "cart-page" && (
-          <div className="w-full">
-            <Button
-              onClick={() => router.push("/checkout")}
-              className="w-full rounded-none"
-            >
-              Proceed to checkout
-            </Button>
+        <div className="flex flex-col gap-4 mt-4">
+          <div className="flex items-center justify-between w-full font-medium pt-2 pr-4">
+            <h3 className="text-lg font-semibold">Grand Total:</h3>
+            <p className="text-base">
+              Rs {new Intl.NumberFormat("en-US").format(totalPrice)}
+            </p>
           </div>
-        )}
-      </CardFooter>
-    </Card>
+          <div className="flex items-center justify-between w-full pr-4">
+            <h3 className="text-sm font-semibold text-muted-foreground">Delivery Fee:</h3>
+            <p className="text-sm font-medium text-muted-foreground">
+              Rs 0
+            </p>
+          </div>
+
+          {mode === "cart-page" && (
+            <div className="w-full mt-4">
+              <Button
+                onClick={() => router.push("/checkout")}
+                className="w-full rounded-none"
+              >
+                Proceed to checkout
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 

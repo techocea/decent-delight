@@ -1,19 +1,16 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { NAV_ITEMS } from "@/lib/constants";
 import { LogOut, User } from "lucide-react";
 import CartIcon from "./CartIcon";
-import {
-  getKindeServerSession,
-  LogoutLink,
-  RegisterLink,
-} from "@kinde-oss/kinde-auth-nextjs/server";
 import { Button } from "../ui/button";
+import { SignOutButton, SignUpButton, useUser } from "@clerk/nextjs";
 
-const Navbar = async () => {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+const Navbar = () => {
+  const { user } = useUser();
 
   return (
     <div className="relative">
@@ -47,15 +44,15 @@ const Navbar = async () => {
               variant="outline"
               className="font-sans hover:bg-background border rounded-full py-2 px-4 text-sm flex gap-x-2"
             >
-              {user.email}{" "}
-              <LogoutLink>
+              {user?.emailAddresses[0]?.emailAddress}
+              <SignOutButton>
                 <LogOut />
-              </LogoutLink>
+              </SignOutButton>
             </Button>
           ) : (
-            <RegisterLink>
+            <SignUpButton>
               <User />
-            </RegisterLink>
+            </SignUpButton>
           )}
         </div>
       </header>

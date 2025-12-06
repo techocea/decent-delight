@@ -1,30 +1,39 @@
 import { db } from "@/lib/db";
-import { CheckoutSchema } from "@/lib/zodSchemas";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { NextRequest, NextResponse } from "next/server";
-import { addresses, orderItems, orders, products, users } from "@/lib/schema";
 import { inArray } from "drizzle-orm";
+import { auth } from "@clerk/nextjs/server";
+import { CheckoutSchema } from "@/lib/zodSchemas";
+import { NextRequest, NextResponse } from "next/server";
+import { addresses, orderItems, orders, products } from "@/lib/schema";
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    console.log(body.addresses);
+
     const parsedData = CheckoutSchema.safeParse(body.addresses);
+
     if (!parsedData.success)
       return NextResponse.json(
         { success: false, message: "Invalid" },
         { status: 400 }
       );
 
-    const { getUser } = getKindeServerSession();
-    const authUser = await getUser();
+    const { isAuthenticated, userId } = await auth();
 
-    if (!authUser || !authUser.id) {
+    if (!isAuthenticated) {
       return NextResponse.json(
         { success: false, message: "Unauthorized" },
         { status: 401 }
       );
     }
+
+    // await db
+    //   .insert(users)
+    //   .values({
+    //     id: userId,
+    //     email: user?.emailAddresses[0].emailAddress!,
+    //     password: null,
+    //   })
+    //   .onConflictDoNothing();
 
     const cart = body.cart ?? [];
     if (cart.length === 0) {
@@ -48,22 +57,22 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    await db
-      .insert(users)
-      .values({
-        id: authUser.id,
-        email: authUser.email!,
-        password: null,
-      })
-      .onConflictDoNothing();
+    // calculate the total price
+    const totalPrice = cart.reduce((sum: number, item: any) => {
+      const product = productsDb.find((p) => p.id === item.product.id);
+      if (!product) return sum;
+
+      return sum + product.price * item.quantity;
+    }, 0);
 
     //create order
     const [newOrder] = await db
       .insert(orders)
       .values({
-        userId: authUser.id,
+        userId,
+        totalPrice,
+        paymentMode: body.paymentMode,
         status: "pending",
-        totalPrice: productsDb.reduce((sum, p) => sum + p.price, 0),
       })
       .returning();
 
@@ -85,6 +94,7 @@ export async function POST(req: NextRequest) {
       {
         success: true,
         orderId: newOrder.id,
+        newOrder,
         message: "Order created successfully",
       },
       { status: 201 }

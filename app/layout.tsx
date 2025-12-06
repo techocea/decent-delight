@@ -1,15 +1,15 @@
 import React from "react";
-// @ts-ignore: No type declarations for CSS import
+// @ts-ignore
 import "@/app/globals.css";
 import Script from "next/script";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Lora } from "next/font/google";
+import { Toaster } from "react-hot-toast";
+import { ClerkProvider } from "@clerk/nextjs";
 import { ourFileRouter } from "./api/uploadthing/core";
 import { extractRouterConfig } from "uploadthing/server";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
-import { Toaster } from "react-hot-toast";
-import { AuthProvider } from "@/providers/AuthProvider";
 
 const lora = Lora({ subsets: ["latin"], variable: "--font-lora" });
 
@@ -27,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <AuthProvider>
+    <ClerkProvider>
       <html lang="en">
         <head>
           <Script
@@ -48,6 +48,6 @@ export default function RootLayout({
           {children}
         </body>
       </html>
-    </AuthProvider>
+    </ClerkProvider>
   );
 }

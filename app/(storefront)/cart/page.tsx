@@ -12,9 +12,9 @@ const Cart = () => {
   const { items } = useStore();
 
   return (
-    <div className="max-w-lg mx-auto px-4 my-20 min-h-[55vh]">
+    <div className="my-12 max-w-xl mx-auto flex items-center justify-center">
       {items.length === 0 ? (
-        <Card className="bg-white flex font-sans flex-col gap-2 items-center justify-center rounded-lg text-center mt-16 px-6 py-10">
+        <Card className="max-w-lg mx-auto bg-white flex font-sans flex-col gap-2 items-center justify-center rounded-lg text-center mt-16 px-6 py-10">
           <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
             <ShoppingBagIcon className="w-10 h-10 text-secondary" />
           </div>

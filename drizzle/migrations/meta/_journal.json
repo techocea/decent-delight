@@ -29,6 +29,13 @@
       "when": 1764928114579,
       "tag": "0003_omniscient_carnage",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1765032213324,
+      "tag": "0004_sour_rattler",
+      "breakpoints": true
     }
   ]
 }

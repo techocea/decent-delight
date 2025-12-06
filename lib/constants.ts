@@ -93,8 +93,8 @@ export const PRODUCTS = [
   {
     id: "1",
     name: "Chocolate Cake",
-    price: 25.00,
-    weight:"1kg",
+    price: 25.0,
+    weight: "1kg",
     imageUrl: "/image-1.png",
     description:
       "Rich Belgian chocolate layered between soft, moist sponge and finished with a silky ganache glaze. Every slice delivers deep cocoa intensity balanced with just the right amount of sweetness—perfect for birthdays, celebrations, or late-night cravings.",
@@ -102,17 +102,17 @@ export const PRODUCTS = [
   {
     id: "2",
     name: "Vanilla Cake",
-    price: 45.00,
-    weight:"1kg",
+    price: 45.0,
+    weight: "1kg",
     imageUrl: "/image-2.png",
     description:
       "Rich Belgian chocolate layered between soft, moist sponge and finished with a silky ganache glaze. Every slice delivers deep cocoa intensity balanced with just the right amount of sweetness—perfect for birthdays, celebrations, or late-night cravings.",
   },
   {
-    id: '3',
+    id: "3",
     name: "Chocolate Cup-Cake",
-    price: 15.00,
-    weight:"1kg",
+    price: 15.0,
+    weight: "1kg",
     imageUrl: "/image-3.png",
     description:
       "Rich Belgian chocolate layered between soft, moist sponge and finished with a silky ganache glaze. Every slice delivers deep cocoa intensity balanced with just the right amount of sweetness—perfect for birthdays, celebrations, or late-night cravings.",
@@ -120,8 +120,8 @@ export const PRODUCTS = [
   {
     id: "4",
     name: "Vanilla Cup-Cake",
-    price: 12.00,
-    weight:"1kg",
+    price: 12.0,
+    weight: "1kg",
     imageUrl: "/image-4.png",
     description:
       "Rich Belgian chocolate layered between soft, moist sponge and finished with a silky ganache glaze. Every slice delivers deep cocoa intensity balanced with just the right amount of sweetness—perfect for birthdays, celebrations, or late-night cravings.",
@@ -129,26 +129,33 @@ export const PRODUCTS = [
   {
     id: "5",
     name: "Strawberry Cake",
-    price: 30.00,
-    weight:"1kg",
+    price: 30.0,
+    weight: "1kg",
     imageUrl: "/cake_jar.jpg",
     description:
       "Rich Belgian chocolate layered between soft, moist sponge and finished with a silky ganache glaze. Every slice delivers deep cocoa intensity balanced with just the right amount of sweetness—perfect for birthdays, celebrations, or late-night cravings.",
-  },{
+  },
+  {
     id: "6",
     name: "Red Velvet Cake",
-    price: 35.00,
-    weight:"1kg",
+    price: 35.0,
+    weight: "1kg",
     imageUrl: "/cookies.jpg",
     description:
       "Rich Belgian chocolate layered between soft, moist sponge and finished with a silky ganache glaze. Every slice delivers deep cocoa intensity balanced with just the right amount of sweetness—perfect for birthdays, celebrations, or late-night cravings.",
-  },{
+  },
+  {
     id: "7",
     name: "Lemon Cake",
-    price: 28.00,
-    weight:"1kg",
+    price: 28.0,
+    weight: "1kg",
     imageUrl: "/cupcakes.jpg",
     description:
       "Rich Belgian chocolate layered between soft, moist sponge and finished with a silky ganache glaze. Every slice delivers deep cocoa intensity balanced with just the right amount of sweetness—perfect for birthdays, celebrations, or late-night cravings.",
-  }
+  },
 ];
+
+export const PAYMENT_MODES = {
+  ONLINE: 1,
+  COD: 2,
+};
