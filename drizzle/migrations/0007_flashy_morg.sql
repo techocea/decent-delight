@@ -1,0 +1,1 @@
+ALTER TABLE "products" ALTER COLUMN "lemon_variant_id" SET DATA TYPE integer;

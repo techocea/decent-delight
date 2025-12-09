@@ -155,7 +155,4 @@ export const PRODUCTS = [
   },
 ];
 
-export const PAYMENT_MODES = {
-  ONLINE: 1,
-  COD: 2,
-};
+

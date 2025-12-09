@@ -1,4 +1,11 @@
-import { integer, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import {
+  integer,
+  json,
+  pgEnum,
+  pgTable,
+  text,
+  timestamp,
+} from "drizzle-orm/pg-core";
 
 export const roleEnum = pgEnum("role", ["user", "admin"]);
 
@@ -26,7 +33,9 @@ export const products = pgTable("products", {
   additionalInfo: text("additional_information").array().notNull(),
   weight: text("weight").notNull(),
   imageUrl: text("image_url").notNull(),
-
+  
+  lemonVariantId: integer("lemon_variant_id").notNull(),
+  
   createdAt: timestamp("created_at", { withTimezone: true })
     .defaultNow()
     .notNull(),
@@ -45,6 +54,8 @@ export const orders = pgTable("orders", {
   totalPrice: integer("total_price").notNull(),
   paymentMode: text("payment_mode").notNull(),
   status: text("status").default("pending").notNull(),
+
+  lemonOrderId: text("lemon_order_id"),
 
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
 });
@@ -79,4 +90,26 @@ export const addresses = pgTable("addresses", {
   contact: text("contact").notNull(),
   postalCode: text("postal_code").notNull(),
   email: text("email").notNull(),
+});
+
+export const payments = pgTable("payments", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  orderId: text("order_id").references(() => orders.id),
+  provider: text("provider").notNull(), // 'lemonsqueezy'
+  providerPaymentId: text("provider_payment_id"),
+  amount: integer("amount").notNull(),
+  status: text("status").notNull(),
+  rawPayload: json("raw_payload").$type<unknown>(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const webhookEvents = pgTable("webhook_events", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  eventType: text("event_type").notNull(),
+  payload: json("payload").$type<unknown>(),
+  receivedAt: timestamp("received_at").defaultNow(),
 });

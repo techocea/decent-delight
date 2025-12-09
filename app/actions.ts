@@ -3,12 +3,22 @@
 import { db } from "@/lib/db";
 import { products } from "@/lib/schema";
 import { productSchema } from "@/lib/zodSchemas";
+import { currentUser } from "@clerk/nextjs/server";
 import { parseWithZod } from "@conform-to/zod";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function createProduct(prevState: unknown, formData: FormData) {
+  const user = await currentUser();
+
+  if (
+    !user ||
+    user?.emailAddresses?.[0]?.emailAddress != "dunsfordbright@gmail.com"
+  ) {
+    return redirect("/");
+  }
+
   const submission = parseWithZod(formData, {
     schema: productSchema,
   });
@@ -20,6 +30,8 @@ export async function createProduct(prevState: unknown, formData: FormData) {
   await db.insert(products).values({
     name: submission.value.name,
     description: submission.value.description,
+    lemonVariantId: submission.value.lemonVariantId,
+    additionalInfo: submission.value.additionalInfo,
     weight: submission.value.weight,
     imageUrl: submission.value.imageUrl,
     price: submission.value.price,
@@ -30,6 +42,15 @@ export async function createProduct(prevState: unknown, formData: FormData) {
 }
 
 export async function updateProduct(prevState: unknown, formData: FormData) {
+  const user = await currentUser();
+
+  if (
+    !user ||
+    user?.emailAddresses?.[0]?.emailAddress != "dunsfordbright@gmail.com"
+  ) {
+    return redirect("/");
+  }
+
   const id = formData.get("id") as string;
   if (!id) {
     throw new Error("Product ID not found in form data.");
@@ -48,6 +69,7 @@ export async function updateProduct(prevState: unknown, formData: FormData) {
     .set({
       name: submission.value.name,
       description: submission.value.description,
+      additionalInfo: submission.value.additionalInfo,
       weight: submission.value.weight,
       imageUrl: submission.value.imageUrl,
       price: submission.value.price,
@@ -59,8 +81,18 @@ export async function updateProduct(prevState: unknown, formData: FormData) {
 }
 
 export async function deleteProduct(formData: FormData) {
+  const user = await currentUser();
+
+  if (
+    !user ||
+    user?.emailAddresses?.[0]?.emailAddress != "dunsfordbright@gmail.com"
+  ) {
+    return redirect("/");
+  }
+
   const id = formData.get("id") as string;
   await db.delete(products).where(eq(products.id, id));
 
   redirect("/dashboard/products");
 }
+

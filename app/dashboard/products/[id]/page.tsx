@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import EditForm from "@/components/storefront/EditForm";
+import EditForm from "@/components/dashboard/EditForm";
 import { notFound } from "next/navigation";
 import { unstable_noStore as noStore } from "next/cache";
 import { products } from "@/lib/schema";
@@ -10,7 +10,7 @@ async function getData(productId: string) {
     .select()
     .from(products)
     .where(eq(products.id, productId))
-     .limit(1);
+    .limit(1);
 
   if (!data || data.length === 0) {
     return notFound();
@@ -22,10 +22,11 @@ async function getData(productId: string) {
 export default async function EditPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   noStore();
-  const data = await getData(params.id);
+  const awaitedParams = (await params).id;
+  const data = await getData(awaitedParams);
 
   return <EditForm data={data} />;
 }

@@ -7,13 +7,13 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { unstable_noStore as noStore } from "next/cache";
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -25,7 +25,11 @@ export default async function DashboardLayout({
 }: {
   children: ReactNode;
 }) {
-  noStore();
+  const user = await currentUser();
+
+  if (user?.emailAddresses[0].emailAddress != "dunsfordbright@gmail.com") {
+    return redirect("/");
+  }
 
   return (
     <div

@@ -8,6 +8,7 @@ export interface Product {
   weight: string;
   imageUrl: string;
   description: string;
+  lemonVariantId:number,  
 }
 
 export interface CartItem {

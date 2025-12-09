@@ -25,6 +25,7 @@ const CheckoutPage = () => {
 
   const handleSubmit = async (data: CheckoutSchemaType) => {
     try {
+      // 1️⃣ Always create the order first
       const res = await fetch("/api/checkout", {
         method: "POST",
         body: JSON.stringify({
@@ -35,11 +36,24 @@ const CheckoutPage = () => {
       });
 
       const result = await res.json();
-      console.log(result);
 
-      if (result.success) {
-        router.push("/order/summary");
+      if (!result.success) {
+        toast.error("Failed to create order");
+        return;
+      }
+
+      const orderId = result.orderId;
+      console.log(orderId);
+
+      if (data.paymentMode === "cash") {
         clearCart();
+        router.push("/order/summary");
+      } else if (data.paymentMode === "online") {
+        const firstProduct = cart[0].product;
+        const checkoutUrl = `https://${process.env.LEMONSQUEEZY_STORE}.lemonsqueezy.com/checkout/buy/${firstProduct.lemonVariantId}?custom_data[order_id]=${orderId}`;
+
+        clearCart();
+        window.location.href = checkoutUrl;
       }
     } catch (error) {
       console.error("Error in checking out:", error);

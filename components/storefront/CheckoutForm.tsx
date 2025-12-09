@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckoutSchema, CheckoutSchemaType } from "@/lib/zodSchemas";
-import { PAYMENT_MODES } from "@/lib/constants";
 import { Circle } from "lucide-react";
 import { cn } from "@/lib/utils";
 

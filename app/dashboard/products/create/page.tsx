@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import React, { useActionState, useState } from "react";
+import { useActionState, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -39,7 +39,12 @@ export default function ProductCreate() {
 
   return (
     <>
-      <form id={form.id} onSubmit={form.onSubmit} action={action} className="sm:px-4 md:px-8 lg:px-10 w-full mx-auto">
+      <form
+        id={form.id}
+        onSubmit={form.onSubmit}
+        action={action}
+        className="sm:px-4 md:px-8 lg:px-10 w-full mx-auto"
+      >
         <div className="flex items-center gap-4">
           <Button variant="outline" size="icon" asChild>
             <Link href="/dashboard/products">
@@ -84,30 +89,45 @@ export default function ProductCreate() {
                 <p className="text-red-500">{fields.description.errors}</p>
               </div>
 
-              <div className="flex flex-col gap-3">
-                <Label>Weight</Label>
-                <Input
-                  type="text"
-                  key={fields.weight.key}
-                  name={fields.weight.name}
-                  defaultValue={fields.weight.initialValue}
-                  className="w-full"
-                  placeholder="Product weight"
-                />
-                <p className="text-red-500">{fields.weight.errors}</p>
-              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="flex flex-col gap-3">
+                  <Label>Weight</Label>
+                  <Input
+                    type="text"
+                    key={fields.weight.key}
+                    name={fields.weight.name}
+                    defaultValue={fields.weight.initialValue}
+                    className="w-full"
+                    placeholder="Product weight"
+                  />
+                  <p className="text-red-500">{fields.weight.errors}</p>
+                </div>
 
-              <div className="flex flex-col gap-3">
-                <Label>Price (Rs)</Label>
-                <Input
-                  type="number"
-                  key={fields.price.key}
-                  name={fields.price.name}
-                  defaultValue={fields.price.initialValue}
-                  className="w-full"
-                  placeholder="Rs 4999"
-                />
-                <p className="text-red-500">{fields.price.errors}</p>
+                <div className="flex flex-col gap-3">
+                  <Label>Price (Rs)</Label>
+                  <Input
+                    type="number"
+                    key={fields.price.key}
+                    name={fields.price.name}
+                    defaultValue={fields.price.initialValue}
+                    className="w-full"
+                    placeholder="Rs 4999"
+                  />
+                  <p className="text-red-500">{fields.price.errors}</p>
+                </div>
+
+                <div className="flex flex-col gap-3">
+                  <Label>Variant ID</Label>
+                  <Input
+                    type="text"
+                    key={fields.lemonVariantId.key}
+                    name={fields.lemonVariantId.name}
+                    defaultValue={fields.lemonVariantId.initialValue}
+                    className="w-full"
+                    placeholder="XXXXXXX"
+                  />
+                  <p className="text-red-500">{fields.lemonVariantId.errors}</p>
+                </div>
               </div>
 
               <div className="flex flex-col gap-3">
