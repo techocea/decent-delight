@@ -1,0 +1,1 @@
+ALTER TABLE "products" ADD COLUMN "lemon_variant_id" integer NOT NULL;

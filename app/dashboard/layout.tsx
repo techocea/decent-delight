@@ -7,14 +7,13 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { unstable_noStore as noStore } from "next/cache";
-import { SignOutButton } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -26,12 +25,16 @@ export default async function DashboardLayout({
 }: {
   children: ReactNode;
 }) {
-  noStore();
+  const user = await currentUser();
+
+  if (user?.emailAddresses[0].emailAddress != "dunsfordbright@gmail.com") {
+    return redirect("/");
+  }
 
   return (
     <div
       className={cn(
-        "flex w-full flex-col max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+        "flex w-full flex-col lg:max-w-6xl mx-auto",
         poppins.className
       )}
     >
@@ -68,9 +71,9 @@ export default async function DashboardLayout({
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
+            {/* <DropdownMenuItem asChild>
               <SignOutButton>Log out</SignOutButton>
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       </header>

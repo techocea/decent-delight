@@ -1,0 +1,100 @@
+[
+  {
+    "name": "Chocolate Cake",
+    "price": 2499.0,
+    "lemonVariantId": 1133429,
+    "weight": "1kg",
+    "imageUrl": "/image-1.png",
+    "description": "Rich Belgian chocolate layered between soft, moist sponge and finished with a silky ganache glaze. Every slice delivers deep cocoa intensity balanced with just the right amount of sweetness—perfect for birthdays, celebrations, or late-night cravings.",
+    "additionalInfo": [
+      "Allergy Information: Contains wheat, eggs, milk.",
+      "Ingredients: Flour, brown sugar, cocoa powder, butter, eggs, milk, chocolate, rising agents, flavouring, icing sugar.",
+      "Our products are made in an environment where nuts, gluten, peanuts, sesame, and other allergen ingredients are used.",
+      "Our cakes are handmade to order; hence, the finished product may slightly differ from the images."
+    ]
+  },
+  {
+    "name": "Vanilla Cake",
+    "price": 999.0,
+    "lemonVariantId": 1133463,
+    "weight": "1kg",
+    "imageUrl": "/image-2.png",
+    "description": "Rich Belgian chocolate layered between soft, moist sponge and finished with a silky ganache glaze. Every slice delivers deep cocoa intensity balanced with just the right amount of sweetness—perfect for birthdays, celebrations, or late-night cravings.",
+    "additionalInfo": [
+      "Allergy Information: Contains wheat, eggs, milk.",
+      "Ingredients: Flour, brown sugar, cocoa powder, butter, eggs, milk, chocolate, rising agents, flavouring, icing sugar.",
+      "Our products are made in an environment where nuts, gluten, peanuts, sesame, and other allergen ingredients are used.",
+      "Our cakes are handmade to order; hence, the finished product may slightly differ from the images."
+    ]
+  },
+  {
+    "name": "Chocolate Cup-Cake",
+    "price": 1999.0,
+    "lemonVariantId": 1133446,
+    "weight": "1kg",
+    "imageUrl": "/image-3.png",
+    "description": "Rich Belgian chocolate layered between soft, moist sponge and finished with a silky ganache glaze. Every slice delivers deep cocoa intensity balanced with just the right amount of sweetness—perfect for birthdays, celebrations, or late-night cravings.",
+    "additionalInfo": [
+      "Allergy Information: Contains wheat, eggs, milk.",
+      "Ingredients: Flour, brown sugar, cocoa powder, butter, eggs, milk, chocolate, rising agents, flavouring, icing sugar.",
+      "Our products are made in an environment where nuts, gluten, peanuts, sesame, and other allergen ingredients are used.",
+      "Our cakes are handmade to order; hence, the finished product may slightly differ from the images."
+    ]
+  },
+  {
+    "name": "Vanilla Cup-Cake",
+    "price": 499.0,
+    "lemonVariantId": 1133466,
+    "weight": "1kg",
+    "imageUrl": "/image-4.png",
+    "description": "Rich Belgian chocolate layered between soft, moist sponge and finished with a silky ganache glaze. Every slice delivers deep cocoa intensity balanced with just the right amount of sweetness—perfect for birthdays, celebrations, or late-night cravings.",
+    "additionalInfo": [
+      "Allergy Information: Contains wheat, eggs, milk.",
+      "Ingredients: Flour, brown sugar, cocoa powder, butter, eggs, milk, chocolate, rising agents, flavouring, icing sugar.",
+      "Our products are made in an environment where nuts, gluten, peanuts, sesame, and other allergen ingredients are used.",
+      "Our cakes are handmade to order; hence, the finished product may slightly differ from the images."
+    ]
+  },
+  {
+    "name": "Strawberry Cake",
+    "price": 3499.0,
+    "lemonVariantId": 1135252,
+    "weight": "1kg",
+    "imageUrl": "/cake_jar.jpg",
+    "description": "Rich Belgian chocolate layered between soft, moist sponge and finished with a silky ganache glaze. Every slice delivers deep cocoa intensity balanced with just the right amount of sweetness—perfect for birthdays, celebrations, or late-night cravings.",
+    "additionalInfo": [
+      "Allergy Information: Contains wheat, eggs, milk.",
+      "Ingredients: Flour, brown sugar, cocoa powder, butter, eggs, milk, chocolate, rising agents, flavouring, icing sugar.",
+      "Our products are made in an environment where nuts, gluten, peanuts, sesame, and other allergen ingredients are used.",
+      "Our cakes are handmade to order; hence, the finished product may slightly differ from the images."
+    ]
+  },
+  {
+    "name": "Red Velvet Cake",
+    "price": 6999.0,
+    "lemonVariantId": 1133477,
+    "weight": "1kg",
+    "imageUrl": "/cookies.jpg",
+    "description": "Rich Belgian chocolate layered between soft, moist sponge and finished with a silky ganache glaze. Every slice delivers deep cocoa intensity balanced with just the right amount of sweetness—perfect for birthdays, celebrations, or late-night cravings.",
+    "additionalInfo": [
+      "Allergy Information: Contains wheat, eggs, milk.",
+      "Ingredients: Flour, brown sugar, cocoa powder, butter, eggs, milk, chocolate, rising agents, flavouring, icing sugar.",
+      "Our products are made in an environment where nuts, gluten, peanuts, sesame, and other allergen ingredients are used.",
+      "Our cakes are handmade to order; hence, the finished product may slightly differ from the images."
+    ]
+  },
+  {
+    "name": "Lemon Cake",
+    "price": 999.0,
+    "lemonVariantId": 1135267,
+    "weight": "1kg",
+    "imageUrl": "/cupcakes.jpg",
+    "description": "Rich Belgian chocolate layered between soft, moist sponge and finished with a silky ganache glaze. Every slice delivers deep cocoa intensity balanced with just the right amount of sweetness—perfect for birthdays, celebrations, or late-night cravings.",
+    "additionalInfo": [
+      "Allergy Information: Contains wheat, eggs, milk.",
+      "Ingredients: Flour, brown sugar, cocoa powder, butter, eggs, milk, chocolate, rising agents, flavouring, icing sugar.",
+      "Our products are made in an environment where nuts, gluten, peanuts, sesame, and other allergen ingredients are used.",
+      "Our cakes are handmade to order; hence, the finished product may slightly differ from the images."
+    ]
+  }
+]

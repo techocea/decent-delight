@@ -1,25 +1,20 @@
-import prisma from "@/app/lib/db";
 import FeaturedProducts from "@/components/storefront/FeaturedProducts";
-import ImageGallery from "@/components/storefront/ImageGallery";
 import { notFound } from "next/navigation";
 import { unstable_noStore as noStore } from "next/cache";
-import PlaceOrderButton from "@/components/storefront/PlaceOrderButton";
 import ProductDetailsCard from "@/components/storefront/ProductDetailsCard";
+import { db } from "@/lib/db";
+import { products } from "@/lib/schema";
+import { eq } from "drizzle-orm";
+import Image from "next/image";
+import { Separator } from "@/components/ui/separator";
+import { Dot } from "lucide-react";
 
 async function getData(productId: string) {
-  const data = await prisma.product.findUnique({
-    where: {
-      id: productId,
-    },
-    select: {
-      id: true,
-      name: true,
-      description: true,
-      price: true,
-      images: true,
-      category: true,
-    },
-  });
+  const data = await db
+    .select()
+    .from(products)
+    .where(eq(products.id, productId))
+    .limit(1);
 
   if (!data) {
     return notFound();
@@ -31,26 +26,50 @@ async function getData(productId: string) {
 export default async function SingleProductPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   noStore();
-  const data = await getData(params.id);
+  const awaitedParams = await params;
+  const data = await getData(awaitedParams.id);
+
+  const imageUrl = data[0].imageUrl;
 
   return (
-    <div className="lg:max-w-5xl mx-auto lg:p-16 pb-32 px-4 lg:px-0">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 py-8">
-        {/* Left side - Image Gallery */}
-        <div>
-          <ImageGallery images={data.images} />
+    <div className="lg:py-16 lg:px-8 pb-32 sm:px-4 bg-white">
+      <div className="lg:max-w-5xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 py-8">
+        <div className="flex flex-col gap-10">
+          <div className="relative flex justify-center bg-gray-100 rounded-md overflow-hidden">
+            <Image
+              width={500}
+              height={500}
+              src={imageUrl}
+              className="object-center w-[500px] h-[500px]"
+              alt="Single product image"
+            />
+          </div>
+
+          {/* Allergen Information */}
+          <div className="font-sans">
+            <h3 className="text-lg font-semibold text-gray-700 pb-2">
+              Description
+            </h3>
+            <Separator />
+
+            <ul className="space-y-2 py-4">
+              {data[0]?.additionalInfo.map((info, idx) => (
+                <li key={idx} className="flex items-center gap-2">
+                  <Dot size={32} className="shrink-0" />
+                  <span className="text-gray-600 text-base">{info}</span>
+                </li>
+              ))}
+            </ul>
+
+            <Separator />
+          </div>
         </div>
 
         {/* Right side - Product Details */}
-        <ProductDetailsCard data={data} />
-      </div>
-
-      {/* Related Products */}
-      <div className="mt-16">
-        <FeaturedProducts />
+        <ProductDetailsCard data={data[0]} />
       </div>
     </div>
   );

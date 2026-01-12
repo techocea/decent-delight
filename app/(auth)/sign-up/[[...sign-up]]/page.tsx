@@ -1,9 +1,9 @@
 import { SignUp } from "@clerk/nextjs";
 
 export default function Page() {
-  return (
-    <section className="flex items-center justify-center w-full min-h-screen">
-      <SignUp />
-    </section>
-  );
+    return (
+        <div className="h-full py-10 flex items-center justify-center w-full">
+            <SignUp />
+        </div>
+    );
 }

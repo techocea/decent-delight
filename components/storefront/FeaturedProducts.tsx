@@ -1,4 +1,4 @@
-import prisma from "@/app/lib/db";
+import prisma from "@/lib/db";
 import ProductCard from "../storefront/ProductCard";
 import { unstable_noStore as noStore } from "next/cache";
 

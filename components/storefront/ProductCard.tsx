@@ -1,70 +1,56 @@
-import Image from "next/image";
+"use client";
 
-import { Button } from "../ui/button";
-import Link from "next/link";
+import React from "react";
+import Image from "next/image";
+import { Product } from "@/store/store";
 import { Skeleton } from "../ui/skeleton";
+import { useRouter } from "next/navigation";
+import AddToCartButton from "./AddToCartButton";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface iAppProps {
-  item: {
-    id: string;
-    name: string;
-    price: number;
-    images: string[];
-    description?: string;
-  };
+  product: Product;
 }
 
-export default function ProductCard({ item }: iAppProps) {
+export default function ProductCard({ product }: iAppProps) {
+  const router = useRouter();
+
   return (
-    <div className="rounded-lg overflow-hidden group transition-transform duration-300 cursor-pointer hover:shadow-lg">
-      <div className="relative">
-        {item.images.map((item, index) => (
-          <div key={index} className="overflow-hidden">
-            <div className="relative h-[250px] w-full">
-              <Image
-                src={item}
-                className="object-cover object-center w-full h-full rounded-lg transition-transform duration-300 group-hover:scale-110"
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                priority={index === 0}
-                alt="Cake Image"
-              />
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="py-4 px-1.5 bg-white">
-        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center">
-          <h1 className="font-semibold text-lg text-gray-800">{item.name}</h1>
-          <h3 className="text-sm font-bold text-primary">
-            Rs {item.price.toLocaleString()}
-          </h3>
+    <Card className="rounded-none bg-white shadow-lg cursor-pointer max-w-64 w-full hover:shadow-2xl">
+      <CardHeader className="items-center text-center py-4">
+        <CardTitle
+          onClick={() => router.push(`/product/${product.id}`)}
+          className="text-sm sm:text-base"
+        >
+          {product.name}
+        </CardTitle>
+        <p className="text-xs sm:text-sm font-sans">{product.weight}</p>
+      </CardHeader>
+      <CardContent className="w-full h-40 sm:h-50vh lg:h-[220px] flex items-center justify-center">
+        <div className="shrink-0 bg-gray-100 rounded-md overflow-hidden">
+          <Image
+            src={product.imageUrl}
+            width={200}
+            height={180}
+            alt={product.name}
+            className="object-center aspect-square w-24 sm:w-32 lg:w-[200px] h-auto"
+          />
         </div>
-
-        <div className="flex flex-col lg:flex-row gap-2 mt-4 w-full">
-          <Button
-            className="w-full transition-colors bg-primary/10 hover:bg-primary/20 text-primary"
-            asChild
-          >
-            <Link href={`/cart/add/${item.id}`}>Add to Cart</Link>
-          </Button>
-          <Button
-            className="w-full transition-colors hover:bg-primary/90"
-            asChild
-          >
-            <Link href={`/product/${item.id}`}>Buy Now</Link>
-          </Button>
-        </div>
+      </CardContent>
+      <div className="max-sm:flex-col-reverse flex gap-2 w-full items-center p-4 sm:p-6 justify-between">
+        <AddToCartButton mode="catalog" product={product} />
+        <p className="font-semibold text-base sm:text-sm text-primary">
+          Rs {product.price}
+        </p>
       </div>
-    </div>
+    </Card>
   );
 }
 
 export function LoadingProductCard() {
   return (
     <div className="flex flex-col">
-      <Skeleton className="w-full h-[330px]" />
+      <Skeleton className="w-full h-40 sm:h-[330px]" />
       <div className="flex flex-col mt-2 gap-y-2">
         <Skeleton className="h-4 w-full" />
         <Skeleton className="w-6 h-full" />

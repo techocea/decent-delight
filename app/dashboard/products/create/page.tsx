@@ -1,6 +1,7 @@
 "use client";
-import Link from "next/link";
 
+import Link from "next/link";
+import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -9,35 +10,22 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
+import { useActionState, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-
 import { ChevronLeft, XIcon } from "lucide-react";
-import { UploadDropzone } from "@/app/lib/uploadthing";
-import { useFormState } from "react-dom";
 import { createProduct } from "@/app/actions";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
-import { productSchema } from "@/app/lib/zodSchemas";
-import { useState } from "react";
-import Image from "next/image";
-import { categories } from "@/lib/constants";
+import { productSchema } from "@/lib/zodSchemas";
 import { SubmitButton } from "@/components/ui/submit-button";
+import { UploadButton } from "@/lib/uploadthing";
 
 export default function ProductCreate() {
-  const [images, setImages] = useState<string[]>([]);
-
-  const [lastResult, action] = useFormState(createProduct, undefined);
+  const [image, setImage] = useState<string | null>(null);
+  const [lastResult, action] = useActionState(createProduct, undefined);
   const [form, fields] = useForm({
     lastResult,
 
@@ -49,12 +37,14 @@ export default function ProductCreate() {
     shouldRevalidate: "onInput",
   });
 
-  const handleDelete = (index: number) => {
-    setImages(images.filter((_, i) => i !== index));
-  };
   return (
     <>
-      <form id={form.id} onSubmit={form.onSubmit} action={action}>
+      <form
+        id={form.id}
+        onSubmit={form.onSubmit}
+        action={action}
+        className="sm:px-4 md:px-8 lg:px-10 w-full mx-auto"
+      >
         <div className="flex items-center gap-4">
           <Button variant="outline" size="icon" asChild>
             <Link href="/dashboard/products">
@@ -64,10 +54,10 @@ export default function ProductCreate() {
           <h1 className="text-xl font-semibold tracking-tight">New Product</h1>
         </div>
 
-        <Card className="mt-5">
+        <Card className="mt-5 bg-white">
           <CardHeader>
             <CardTitle>Product Details</CardTitle>
-            <CardDescription>
+            <CardDescription className="text-sm">
               In this form you can create new product
             </CardDescription>
           </CardHeader>
@@ -84,7 +74,6 @@ export default function ProductCreate() {
                   className="w-full"
                   placeholder="Product Name"
                 />
-
                 <p className="text-red-500">{fields.name.errors}</p>
               </div>
 
@@ -100,113 +89,95 @@ export default function ProductCreate() {
                 <p className="text-red-500">{fields.description.errors}</p>
               </div>
 
-              <div className="flex flex-col gap-3">
-                <Label>Price (Rs)</Label>
-                <Input
-                  type="number"
-                  key={fields.price.key}
-                  name={fields.price.name}
-                  defaultValue={fields.price.initialValue}
-                  className="w-full"
-                  placeholder="Rs 4999"
-                />
-                <p className="text-red-500">{fields.price.errors}</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="flex flex-col gap-3">
+                  <Label>Weight</Label>
+                  <Input
+                    type="text"
+                    key={fields.weight.key}
+                    name={fields.weight.name}
+                    defaultValue={fields.weight.initialValue}
+                    className="w-full"
+                    placeholder="Product weight"
+                  />
+                  <p className="text-red-500">{fields.weight.errors}</p>
+                </div>
+
+                <div className="flex flex-col gap-3">
+                  <Label>Price (Rs)</Label>
+                  <Input
+                    type="number"
+                    key={fields.price.key}
+                    name={fields.price.name}
+                    defaultValue={fields.price.initialValue}
+                    className="w-full"
+                    placeholder="Rs 4999"
+                  />
+                  <p className="text-red-500">{fields.price.errors}</p>
+                </div>
+
+                <div className="flex flex-col gap-3">
+                  <Label>Variant ID</Label>
+                  <Input
+                    type="text"
+                    key={fields.lemonVariantId.key}
+                    name={fields.lemonVariantId.name}
+                    defaultValue={fields.lemonVariantId.initialValue}
+                    className="w-full"
+                    placeholder="XXXXXXX"
+                  />
+                  <p className="text-red-500">{fields.lemonVariantId.errors}</p>
+                </div>
               </div>
 
               <div className="flex flex-col gap-3">
-                <Label>Most Delicious</Label>
-                <Switch
-                  key={fields.isMostDelicious.key}
-                  name={fields.isMostDelicious.name}
-                  defaultValue={fields.isMostDelicious.initialValue}
-                />
-                <p className="text-red-500">{fields.isMostDelicious.errors}</p>
-              </div>
-
-              <div className="flex flex-col gap-3">
-                <Label>Status</Label>
-                <Select
-                  key={fields.status.key}
-                  name={fields.status.name}
-                  defaultValue={fields.status.initialValue}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="draft">Draft</SelectItem>
-                    <SelectItem value="published">Published</SelectItem>
-                    <SelectItem value="archived">Archived</SelectItem>
-                  </SelectContent>
-                </Select>
-                <p className="text-red-500">{fields.status.errors}</p>
-              </div>
-              <div className="flex flex-col gap-3">
-                <Label>Category</Label>
-                <Select
-                  key={fields.category.key}
-                  name={fields.category.name}
-                  defaultValue={fields.category.initialValue}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select category"></SelectValue>
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((category) => (
-                      <SelectItem
-                        key={category.id}
-                        value={category.name}
-                      >{category.title}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <p className="text-red-500">{fields.category.errors}</p>
-              </div>
-              <div className="flex flex-col gap-3">
-                <Label>Images</Label>
-                <input
-                  type="hidden"
-                  value={images}
-                  key={fields.images.key}
-                  name={fields.images.name}
-                  defaultValue={fields.images.initialValue as any}
-                />
-                {images.length > 0 ? (
+                <Label>Image</Label>
+                {image ? (
                   <div className="flex gap-5">
-                    {images.map((image, index) => (
-                      <div key={index} className="relative w-[100px] h-[100px]">
-                        <Image
-                          height={100}
-                          width={100}
-                          src={image}
-                          className="w-full h-full object-cover rounded-lg"
-                          alt="product image"
-                        />
-                        <button
-                          onClick={() => handleDelete(index)}
-                          type="button"
-                          className="absolute -top-2 -right-3 bg-red-500 p-2 rounded-lg"
-                        >
-                          <XIcon className="w-3 h-3" />
-                        </button>
-                      </div>
-                    ))}
+                    <div className="relative w-[100px] h-[100px]">
+                      <Image
+                        height={100}
+                        width={100}
+                        src={image || ""}
+                        className="w-full h-full object-cover rounded-lg"
+                        alt="product image"
+                      />
+                      <button
+                        onClick={() => setImage(null)}
+                        type="button"
+                        className="absolute -top-2 -right-3 bg-red-500 p-2 rounded-lg"
+                      >
+                        <XIcon className="w-3 h-3" />
+                      </button>
+                    </div>
                   </div>
                 ) : (
-                  <UploadDropzone
-                    endpoint="imageUploader"
-                    onClientUploadComplete={(res) =>
-                      setImages(res.map((r) => r.url))
-                    }
-                    onUploadError={() => alert("something went wrong!")}
-                  />
+                  <div className="border rounded-lg flex items-center justify-center w-full h-40">
+                    <UploadButton
+                      endpoint="imageUploader"
+                      className="ut-button:px-2 ut-button:py-1.5 ut-button:bg-blue-500 ut-button:hover:bg-blue-500/50 ut-button:ut-readying:bg-blue-500/50"
+                      onClientUploadComplete={(res) => {
+                        console.log(
+                          "Successfully uploaded URL:",
+                          res[0].ufsUrl
+                        );
+                        setImage(res[0].ufsUrl);
+                      }}
+                      onUploadError={() => alert("something went wrong!")}
+                    />
+                  </div>
                 )}
-                <p className="text-red-500">{fields.images.errors}</p>
+                <input
+                  type="hidden"
+                  name={fields.imageUrl.name}
+                  value={image || ""}
+                />
+                <p className="text-red-500">{fields.imageUrl?.errors}</p>
               </div>
             </div>
           </CardContent>
           <CardFooter>
-            <SubmitButton text="Create Product"/>
+            <SubmitButton text="Create Product" />
           </CardFooter>
         </Card>
       </form>

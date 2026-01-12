@@ -1,15 +1,17 @@
 import React from "react";
-import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
-import { ClerkProvider } from "@clerk/nextjs";
-import type { Metadata } from "next";
-import "./globals.css";
-import { Lora } from "next/font/google";
-import { cn } from "@/lib/utils";
-import { extractRouterConfig } from "uploadthing/server";
-import { ourFileRouter } from "./api/uploadthing/core";
+// @ts-ignore
+import "@/app/globals.css";
 import Script from "next/script";
+import { cn } from "@/lib/utils";
+import type { Metadata } from "next";
+import { Lora } from "next/font/google";
+import { Toaster } from "react-hot-toast";
+import { ClerkProvider } from "@clerk/nextjs";
+import { ourFileRouter } from "./api/uploadthing/core";
+import { extractRouterConfig } from "uploadthing/server";
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 
-const lora = Lora({ subsets: ["latin"] });
+const lora = Lora({ subsets: ["latin"], variable: "--font-lora" });
 
 export const metadata: Metadata = {
   title: "Decent Delight",
@@ -42,6 +44,7 @@ export default function RootLayout({
         </head>
         <body className={cn("min-h-screen  antialiased", lora.className)}>
           <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+          <Toaster position="top-center" />
           {children}
         </body>
       </html>

@@ -1,24 +1,22 @@
 "use server";
 
-import { redirect } from "next/navigation";
-import { parseWithZod } from "@conform-to/zod";
-import { productSchema } from "./lib/zodSchemas";
-import prisma from "./lib/db";
-import { redis } from "./lib/redis";
-import { Cart } from "@/lib/interface";
-import { revalidatePath } from "next/cache";
+import { db } from "@/lib/db";
+import { products } from "@/lib/schema";
+import { productSchema } from "@/lib/zodSchemas";
 import { currentUser } from "@clerk/nextjs/server";
-// import { stripe } from "@/lib/stripe";
-// import Stripe from "stripe";
+import { parseWithZod } from "@conform-to/zod";
+import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function createProduct(prevState: unknown, formData: FormData) {
   const user = await currentUser();
 
   if (
-    user?.emailAddresses?.[0]?.emailAddress === "decentdelight2022@gmail.com" ||
-    "dunsfordbright@gmail.com"
+    !user ||
+    user?.emailAddresses?.[0]?.emailAddress != "dunsfordbright@gmail.com"
   ) {
-    return redirect("/dashboard");
+    return redirect("/");
   }
 
   const submission = parseWithZod(formData, {
@@ -29,61 +27,56 @@ export async function createProduct(prevState: unknown, formData: FormData) {
     return submission.reply();
   }
 
-  const flattenUrls = submission.value.images.flatMap((urlString) =>
-    urlString.split(",").map((url) => url.trim())
-  );
-
-  await prisma.product.create({
-    data: {
-      name: submission.value.name,
-      description: submission.value.description,
-      status: submission.value.status,
-      price: submission.value.price,
-      images: flattenUrls,
-      category: submission.value.category,
-      isMostDelicious: submission.value.isMostDelicious === true ? true : false,
-    },
+  await db.insert(products).values({
+    name: submission.value.name,
+    description: submission.value.description,
+    lemonVariantId: submission.value.lemonVariantId,
+    additionalInfo: submission.value.additionalInfo,
+    weight: submission.value.weight,
+    imageUrl: submission.value.imageUrl,
+    price: submission.value.price,
   });
+
+  revalidatePath("/dashboard/products");
   redirect("/dashboard/products");
 }
 
-export async function editProduct(prevState: any, formData: FormData) {
+export async function updateProduct(prevState: unknown, formData: FormData) {
   const user = await currentUser();
 
   if (
     !user ||
-    user?.emailAddresses?.[0]?.emailAddress === "decentdelight2022@gmail.com"
+    user?.emailAddresses?.[0]?.emailAddress != "dunsfordbright@gmail.com"
   ) {
-    return redirect("/dashboard");
+    return redirect("/");
+  }
+
+  const id = formData.get("id") as string;
+  if (!id) {
+    throw new Error("Product ID not found in form data.");
   }
 
   const submission = parseWithZod(formData, {
     schema: productSchema,
   });
 
-  if (submission.status != "success") {
+  if (submission.status !== "success") {
     return submission.reply();
   }
-  const flattenUrls = submission.value.images.flatMap((urlString) =>
-    urlString.split(",").map((url) => url.trim())
-  );
 
-  const productId = formData.get("productId") as string;
-  await prisma.product.update({
-    where: {
-      id: productId,
-    },
-    data: {
+  await db
+    .update(products)
+    .set({
       name: submission.value.name,
       description: submission.value.description,
-      category: submission.value.category,
+      additionalInfo: submission.value.additionalInfo,
+      weight: submission.value.weight,
+      imageUrl: submission.value.imageUrl,
       price: submission.value.price,
-      isMostDelicious: submission.value.isMostDelicious === true ? true : false,
-      status: submission.value.status,
-      images: flattenUrls,
-    },
-  });
+    })
+    .where(eq(products.id, id));
 
+  revalidatePath(`/dashboard/products/${id}`);
   redirect("/dashboard/products");
 }
 
@@ -92,145 +85,14 @@ export async function deleteProduct(formData: FormData) {
 
   if (
     !user ||
-    user?.emailAddresses?.[0]?.emailAddress === "decentdelight2022@gmail.com"
+    user?.emailAddresses?.[0]?.emailAddress != "dunsfordbright@gmail.com"
   ) {
-    return redirect("/dashboard");
+    return redirect("/");
   }
 
-  await prisma.product.delete({
-    where: {
-      id: formData.get("productId") as string,
-    },
-  });
+  const id = formData.get("id") as string;
+  await db.delete(products).where(eq(products.id, id));
 
   redirect("/dashboard/products");
 }
 
-export async function addItem(productId: string) {
-  const user = await currentUser();
-
-  if (!user) {
-    return redirect("/dashboard");
-  }
-
-  let cart: Cart | null = await redis.get(`cart-${user.id}`);
-
-  const selectedProduct = await prisma.product.findUnique({
-    select: {
-      id: true,
-      name: true,
-      price: true,
-      images: true,
-    },
-    where: {
-      id: productId,
-    },
-  });
-
-  if (!selectedProduct) {
-    throw new Error("No product with this ID");
-  }
-
-  let myCart = {} as Cart;
-
-  if (!cart || !cart.items) {
-    myCart = {
-      userId: user.id,
-      items: [
-        {
-          price: selectedProduct.price,
-          id: selectedProduct.id,
-          imageString: selectedProduct.images[0],
-          name: selectedProduct.name,
-          quantity: 1,
-        },
-      ],
-    };
-  } else {
-    let itemFound = false;
-
-    myCart.items = cart.items.map((item) => {
-      if (item.id === productId) {
-        itemFound = true;
-        item.quantity += 1;
-      }
-
-      return item;
-    });
-
-    if (!itemFound) {
-      myCart.items.push({
-        id: selectedProduct.id,
-        imageString: selectedProduct.images[0],
-        name: selectedProduct.name,
-        price: selectedProduct.price,
-        quantity: 1,
-      });
-    }
-  }
-
-  await redis.set(`cart-${user.id}`, myCart);
-
-  revalidatePath("/", "layout");
-}
-
-export async function deleteItem(formData: FormData) {
-  const user = await currentUser();
-
-  if (!user) {
-    return redirect("/dashboard");
-  }
-
-  const productId = formData.get("productId");
-
-  let cart: Cart | null = await redis.get(`cart-${user.id}`);
-
-  if (cart && cart.items) {
-    const updateCart: Cart = {
-      userId: user.id,
-      items: cart.items.filter((item) => item.id !== productId),
-    };
-
-    await redis.set(`cart-${user.id}`, updateCart);
-  }
-
-  revalidatePath("/bag");
-}
-
-// export async function checkOut() {
-//   const { getUser } = getKindeServerSession();
-//   const user = await getUser();
-
-//   if (!user) {
-//     return redirect("/");
-//   }
-
-//   let cart: Cart | null = await redis.get(`cart-${user.id}`);
-
-//   if (cart && cart.items) {
-//     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] =
-//       cart.items.map((item) => ({
-//         price_data: {
-//           currency: "usd",
-//           unit_amount: item.price * 100,
-//           product_data: {
-//             name: item.name,
-//             images: [item.imageString],
-//           },
-//         },
-//         quantity: item.quantity,
-//       }));
-
-//     const session = await stripe.checkout.sessions.create({
-//       mode: "payment",
-//       line_items: lineItems,
-//       success_url: "http://localhost:3000/payment/success",
-//       cancel_url: "http://localhost:3000/payment/cancel",
-//       metadata: {
-//         userId: user.id,
-//       },
-//     });
-
-//     return redirect(session.url as string);
-//   }
-// }

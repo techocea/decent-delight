@@ -38,3 +38,5 @@ next-env.d.ts
 
 //directpay 
 CakeDelight&01
+# clerk configuration (can include secrets)
+/.clerk/

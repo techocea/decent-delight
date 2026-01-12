@@ -2,16 +2,16 @@ import About from "@/components/storefront/About";
 import CategoryList from "@/components/storefront/CategoryList";
 import Features from "@/components/storefront/Features";
 import Hero from "@/components/storefront/Hero";
-import MostDelicious from "@/components/storefront/MostDelicious";
+import WhyChooseUs from "@/components/storefront/WhyChooseUs";
 
 export default function IndexPage() {
   return (
     <>
       <Hero />
-      <MostDelicious />
+      <WhyChooseUs />
       <About />
       <CategoryList />
-      <Features />
+      {/*<Features /> */}
     </>
   );
 }

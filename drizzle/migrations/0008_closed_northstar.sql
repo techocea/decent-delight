@@ -1,0 +1,1 @@
+ALTER TABLE "products" DROP COLUMN "lemon_variant_id";
